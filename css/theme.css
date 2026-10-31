@@ -1619,18 +1619,18 @@ article.post header .btn {
 #header #mobile-menu #menu-toggle {
   display: none;
 }
-#header #mobile-menu #menu-toggle:checked ~ .menu-main-menu-container {
+#header #mobile-menu #menu-toggle:checked ~ .menu-primary_menu-container {
   height: 100vh;
   padding-bottom: 1em;
   padding-top: calc(var(--font-size-lg) + 1em);
 }
-#header #mobile-menu #menu-toggle:checked ~ .menu-main-menu-container a {
+#header #mobile-menu #menu-toggle:checked ~ .menu-primary_menu-container a {
   display: block;
 }
 #header #mobile-menu #menu-toggle:checked ~ label i::after {
   content: "\f057";
 }
-#header #mobile-menu .menu-main-menu-container {
+#header #mobile-menu .menu-primary_menu-container {
   height: 0vh;
   padding-left: 1em;
   padding-right: 1em;
@@ -1645,12 +1645,12 @@ article.post header .btn {
   box-shadow: 0px 0px 30px 30px rgba(var(--accent), 0.95);
   backdrop-filter: blur(3px);
 }
-#header #mobile-menu .menu-main-menu-container #menu-main-menu {
+#header #mobile-menu .menu-primary_menu-container #menu-primary_menu {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
 }
-#header #mobile-menu .menu-main-menu-container a {
+#header #mobile-menu .menu-primary_menu-container a {
   transition: 0.5s all;
   display: none;
   text-decoration: none;

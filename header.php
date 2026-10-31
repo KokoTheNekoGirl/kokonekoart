@@ -26,10 +26,10 @@
         <label for="menu-toggle">
             <i class="fa-solid"></i>
         </label>
-        <?php wp_nav_menu( array( 'theme_location' => 'main-menu', 'link_before' => '<span itemprop="name">', 'link_after' => '</span>' ) ); ?>
+        <?php wp_nav_menu( array( 'theme_location' => 'primary_menu', 'link_before' => '<span itemprop="name">', 'link_after' => '</span>' ) ); ?>
     </nav>
     <nav id="menu" class='site-nav' role="navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
-    <?php wp_nav_menu( array( 'theme_location' => 'main-menu', 'link_before' => '<span itemprop="name">', 'link_after' => '</span>' ) ); ?>
+    <?php wp_nav_menu( array( 'theme_location' => 'primary_menu', 'link_before' => '<span itemprop="name">', 'link_after' => '</span>' ) ); ?>
     </nav>
 </header>
 <div id="container">

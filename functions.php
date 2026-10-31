@@ -12,7 +12,7 @@ add_theme_support( 'appearance-tools' );
 add_theme_support( 'woocommerce' );
 global $content_width;
 if ( !isset( $content_width ) ) { $content_width = 1920; }
-register_nav_menus( array( 'main-menu' => esc_html__( 'Main Menu', 'kokoneko' ) ) );
+register_nav_menus( array( 'primary_menu' => esc_html__( 'Primary Menu', 'kokoneko' ) ) );
 }
 add_action( 'wp_enqueue_scripts', 'kokoneko_enqueue' );
 function kokoneko_enqueue() {
