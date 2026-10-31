@@ -1,0 +1,52 @@
+{
+    "key": "group_6ae4b747a9439",
+    "title": "Hidden Pages",
+    "fields": [
+        {
+            "key": "field_6ae4b7480d65b",
+            "label": "Require Login",
+            "name": "hidden_page",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1793489219,
+    "show_in_graphql": 1,
+    "graphql_field_name": "hiddenPages",
+    "map_graphql_types_from_location_rules": 1
+}
