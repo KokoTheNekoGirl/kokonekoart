@@ -52,6 +52,7 @@ ACF/SCF field groups are saved to the theme as JSON through the `acf/settings/sa
 
 ### Dynamic, content-driven pages
 - **Home:** hero, about, commissions, portfolio and contact sections have repeaters for some flexibility in the content while maintaining a restricted layout.
+- **About:** [my_age] and [birthday] shortcodes automatically calculate my current age, so I don't have to update it every year.
 - **Portfolio:** category "pills" are coloured from a field. `get_contrast_color()` calculates the luminance of each colour (the standard `0.299 / 0.587 / 0.114` weighting) and chooses black or white text, so labels stay readable whatever colour I pick.
 - **Project pages:** optional buttons (code, live demo, Figma design or prototype, mockup PDF, external site) appear only if the matching field is filled in.
 - **RSS aggregator:** a template merges several feeds, sorts them by date, filters out YouTube Shorts and reports feeds that failed. This page is private and for personal use. It was fun to play around with.
