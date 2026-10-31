@@ -36,7 +36,7 @@
         #menu-toggle{
             display: none;
             &:checked  ~ { 
-                .menu-primary_menu-container {
+                .menu-main-menu-container {
                     height:100vh;
                     padding-bottom:1em;
                     padding-top: calc( var(--font-size-lg) + 1em);
@@ -49,7 +49,7 @@
                 }
             }
         }
-        .menu-primary_menu-container {
+        .menu-main-menu-container {
             height:0vh;
             padding-left: 1em;
             padding-right: 1em;
@@ -62,7 +62,7 @@
             background: rgba(var(--accent),0.95);
             box-shadow: 0px 0px 30px 30px rgba(var(--accent),0.95);
             backdrop-filter: blur(3px);
-            #menu-primary_menu {
+            #menu-main-menu {
                 display: flex;
                 flex-direction: column;
                 gap:0.5em;
