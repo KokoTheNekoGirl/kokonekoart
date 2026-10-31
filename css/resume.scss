@@ -1,0 +1,113 @@
+.resume{
+    background: rgb(var(--off-black)); 
+
+    * {
+        font-family: "Reem Kufi", sans-serif !important;
+    }
+    h1 {
+        font-size: 42px;
+        text-align: center;
+        line-height: 1;
+        font-weight: 700;
+    }
+    h2{
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 700;
+        position: relative;
+        &::after{
+            position: absolute;
+            width:100%;
+            height:3px;
+            border-radius: 10px;
+            bottom: -10px;
+            background: rgb(var(--primary));
+            left:0;
+            content: "";
+        }
+    }
+    h3{
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 700;
+    }
+    a,p{
+        font-weight: 400;
+        color:rgb(var(--black));
+        font-size: 12px;
+        line-height: 1;
+    }
+    a{
+        text-decoration: none;
+    }
+
+    page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(var(--black),0.5);
+        position: relative;
+        padding:60px;
+        
+        .frame {
+            display: block;
+            position: absolute;
+            top:20px;
+            left:20px;
+            height: calc(100% - 40px);
+            width: calc(100% - 40px);
+            box-sizing: border-box;
+            border: 20px solid rgb(var(--primary));
+            padding:5px;
+            pointer-events: none;
+            img {
+                width: 65px;
+                height: 65px;
+            }
+        }
+
+        .inner{
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        header {
+            .list-container{
+                display: flex;
+                margin-top: 20px;
+                justify-content: center;
+                position: relative;
+                box-sizing: border-box;
+                .list-item{
+                    font-size:16px;
+                    a{
+                        font-size:16px;
+                    }
+                    &:not(:last-child)::after{
+                        content: "\2022";
+                        margin: 0 2px;
+                    }
+                }
+                &::after{
+                    position: absolute;
+                    width:100%;
+                    height:3px;
+                    border-radius: 10px;
+                    bottom: -10px;
+                    background: rgb(var(--primary));
+                    left:0;
+                    content: "";
+                }
+            }
+            p{
+                margin: 20px 0 15px;
+                text-align: center;
+            }
+        }
+    }
+    page[size="letter"] {  
+        width: 8.5in;
+        height: 11in; 
+    }
+}

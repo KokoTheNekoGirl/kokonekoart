@@ -1,0 +1,199 @@
+@use '../base/vars' as *;
+
+:root{
+    /* TYPOGRAPHY */
+    --font-size-xxlg: clamp(40px, 5vw + 1rem, 60px);
+    --font-size-xlg: clamp(28px, 3.5vw + 1rem, 40px);
+    --font-size-lg: clamp(22px, 3vw + 1rem, 32px);
+    --font-size-md: clamp(18px, 2.5vw + 1rem, 24px);
+    --font-size-sm: clamp(16px, 2vw + 1rem, 20px);
+    --font-size-xsm: clamp(16px, 2vw + 1rem, 18px);
+    --font-size-xxsm: clamp(14px, 2vw + 1rem, 16px);
+
+    /* BRAND FONTS */
+    --font-face-heading: "Fuzzy bubbles", cursive;
+    --font-face-base: "Spinnaker", sans-serif;
+    --font-awesome: 'Font Awesome 7 Free';
+
+    /* BRAND COLOURS */
+    --primary: 119, 70, 163;
+    --btn-hover: 95, 47, 138;
+    --accent: 203, 183, 247;
+    --footer: 175, 137, 224;
+    --secondary: 252, 140, 228;
+    --secondary-hover: 232, 95, 202;
+    --cta: 255, 248, 165;
+    --text: 35, 24, 45;
+    --black: 12, 12, 12;
+    --off-black: 35, 24, 45;
+    --white: 245, 245, 245;
+    --grey: 208, 208, 208;
+    
+    /* SECONDARY COLOURS */
+    --green: 80, 217, 159;
+    --blue: 152, 218, 255;
+    --blue-shadow: 81, 117, 194;
+    --orange: 255, 184, 118;
+    --orange-shadow: 235, 115, 68;
+    --yellow-shadow: 194, 230, 118;
+    --red: 253, 83, 83;
+    
+    /*DEFAULT STYLES*/
+    --default-border-radius: 20px;
+}
+
+*:focus{ 
+  outline: solid rgb(var(--secondary));
+}
+
+body:not(.resume) {
+    background: url("#{$base-uri}background.jpg") no-repeat center center / cover;
+    background-attachment: fixed;
+    background-blend-mode: lighten;
+    font-family: var(--font-face-base);
+    font-size: var(--font-size-xsm);
+    backdrop-filter: blur(5px);
+    //position: relative;
+    min-height:100vh;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* TEXT STYLES */
+h1, .h1, h1 *, .h1 * {
+  font-size: var(--font-size-xxlg);
+  line-height: var(--font-size-xxlg);
+  font-family: var(--font-face-heading);
+  font-style: normal;
+  font-weight: 700;
+  text-align: center;
+  //margin-bottom:0.5em;
+  letter-spacing: 2%;
+  text-wrap: balance;
+}
+
+h2, .h2, h2 *, .h2 *  {
+  font-size: var(--font-size-xlg);
+  line-height: var(--font-size-xlg);
+  font-family: var(--font-face-heading);
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom:0.5em;
+  letter-spacing: 2%;
+  text-wrap: balance;
+}
+
+h3, .h3, h3 *, .h3 *  {
+  font-size: var(--font-size-lg);
+  line-height: var(--font-size-lg);
+  font-family: var(--font-face-heading);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 2%;
+  text-wrap: balance;
+}
+
+h4, .h4, h4 *, .h4 *  {
+  font-size: var(--font-size-md);
+  line-height: var(--font-size-md);
+  font-family: var(--font-face-heading);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 2%;
+  text-wrap: balance;
+}
+
+h5, .h5 , h5 *, .h5 *  {
+  font-size: var(--font-size-sm);
+  line-height: var(--font-size-sm);
+  font-family: var(--font-face-heading);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 2%;
+  text-wrap: balance;
+}
+
+strong{
+  font-weight: 600;
+}
+  
+p, .p , p *, .p *, button  {
+  font-size: var(--font-size-xsm);
+  line-height: 32px;
+  letter-spacing: 2%;
+  font-family: var(--font-face-base);
+  font-style: normal;
+  font-weight: 400;
+  text-wrap: balance;
+  strong{
+      font-weight: 600;
+  }
+}
+
+p.small,.p.small,.small p {
+  font-size:var(--font-size-xxsm);
+}
+
+a:not(.icon,.btn) {
+  font-size: var(--font-size-xsm);
+  font-family: var(--font-face-base);
+  color: rgb(var(--primary));
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
+  transition: 0.5s all;
+  letter-spacing: 2%;
+  text-wrap: balance;
+  &:hover, &:focus {
+    color:rgb(var(--btn-hover));
+  }
+}
+.text-label{
+  cursor: pointer;
+}
+
+button:hover,a{
+  cursor: pointer;
+}
+
+a[rel="external"]:not(.icon,.btn),a[rel="external noopener"]:not(.icon,.btn),a[rel="noopener"]:not(.icon,.btn) {
+  position: relative;
+}
+
+a[rel="external"]:not(.icon,.btn)::after,a[rel="external noopener"]:not(.icon,.btn)::after,a[rel="noopener"]:not(.icon,.btn)::after {
+  font-family: var(--font-awesome);
+  font-weight: 900;
+  content: "\f08e";
+  font-size: 12px;
+  vertical-align: middle;
+  text-decoration: none;
+  margin-left:0.25em;
+}
+
+#wpadminbar {
+    top: -32px;
+}
+
+.topbar {
+	background: rgb(var(--primary));
+	z-index:999;
+	position:relative;
+	height:min-content;
+	padding-bottom:unset!important;
+	padding: 0.25em 0.5em!important;
+	display:flex;
+	justify-content:center;
+	text-align:center;
+	color: rgb(var(--white));
+}
+
+.topbar a {
+	color: rgb(var(--white));
+	text-decoration:none;
+	-webkit-text-stroke: 0.3px currentColor;
+  paint-order: stroke fill;
+}
+
+.topbar a:hover{
+	color: rgb(var(--secondary))
+}

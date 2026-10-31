@@ -1,0 +1,81 @@
+#header{
+    #menu {
+        ul{
+            display: flex;
+            gap:1em;
+            a{
+                color: rgb(var(--white));
+                text-decoration: none;
+                padding: 0.75em 1.2em;
+                border-radius: 2em;
+                background: rgb(var(--primary));
+                transition: 0.5s;
+                font-size: var(--font-size-sm);
+            }
+        }
+    }
+    #mobile-menu{
+        display: none;
+        font-size:var(--font-size-lg);
+        label {
+            color:rgb(var(--primary));
+            position: relative;
+            background: rgb(var(--accent));
+            cursor: pointer;
+            z-index: 2;
+            i {
+                transition: 0.5s all;
+                &:hover,&:focus{
+                   color: rgb(var(--btn-hover));
+                }
+                &::after{
+                    content:'\f0c9';
+                }
+            }
+        }
+        #menu-toggle{
+            display: none;
+            &:checked  ~ { 
+                .menu-main-menu-container {
+                    height:100vh;
+                    padding-bottom:1em;
+                    padding-top: calc( var(--font-size-lg) + 1em);
+                    a{
+                        display: block;
+                    }
+                }
+                label i::after {
+                    content:'\f057';
+                }
+            }
+        }
+        .menu-main-menu-container {
+            height:0vh;
+            padding-left: 1em;
+            padding-right: 1em;
+            width:fit-content;
+            right:0;
+            position: fixed;
+            top:0;
+            z-index: 1;
+            transition: 0.5s all;
+            background: rgba(var(--accent),0.95);
+            box-shadow: 0px 0px 30px 30px rgba(var(--accent),0.95);
+            backdrop-filter: blur(3px);
+            #menu-main-menu {
+                display: flex;
+                flex-direction: column;
+                gap:0.5em;
+            }
+            a {
+                transition: 0.5s all;
+                display: none;
+                text-decoration: none;
+                font-weight: 700;
+                font-size: var(--font-size-md);
+            }
+        }
+    }
+    overflow-x: hidden;
+    max-width: 100%;
+}

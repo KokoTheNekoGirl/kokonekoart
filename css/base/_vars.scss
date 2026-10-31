@@ -1,0 +1,5 @@
+$base-uri: "../img/";
+
+@mixin sample($file,$fit: contain) {
+  background: url("#{$base-uri}samples/#{$file}") no-repeat center center / $fit;
+}

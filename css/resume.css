@@ -1,0 +1,107 @@
+@charset "UTF-8";
+.resume {
+  background: rgb(var(--off-black));
+}
+.resume * {
+  font-family: "Reem Kufi", sans-serif !important;
+}
+.resume h1 {
+  font-size: 42px;
+  text-align: center;
+  line-height: 1;
+  font-weight: 700;
+}
+.resume h2 {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 700;
+  position: relative;
+}
+.resume h2::after {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  border-radius: 10px;
+  bottom: -10px;
+  background: rgb(var(--primary));
+  left: 0;
+  content: "";
+}
+.resume h3 {
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 700;
+}
+.resume a, .resume p {
+  font-weight: 400;
+  color: rgb(var(--black));
+  font-size: 12px;
+  line-height: 1;
+}
+.resume a {
+  text-decoration: none;
+}
+.resume page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(var(--black), 0.5);
+  position: relative;
+  padding: 60px;
+}
+.resume page .frame {
+  display: block;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: calc(100% - 40px);
+  width: calc(100% - 40px);
+  box-sizing: border-box;
+  border: 20px solid rgb(var(--primary));
+  padding: 5px;
+  pointer-events: none;
+}
+.resume page .frame img {
+  width: 65px;
+  height: 65px;
+}
+.resume page .inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.resume page header .list-container {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+}
+.resume page header .list-container .list-item {
+  font-size: 16px;
+}
+.resume page header .list-container .list-item a {
+  font-size: 16px;
+}
+.resume page header .list-container .list-item:not(:last-child)::after {
+  content: "•";
+  margin: 0 2px;
+}
+.resume page header .list-container::after {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  border-radius: 10px;
+  bottom: -10px;
+  background: rgb(var(--primary));
+  left: 0;
+  content: "";
+}
+.resume page header p {
+  margin: 20px 0 15px;
+  text-align: center;
+}
+.resume page[size=letter] {
+  width: 8.5in;
+  height: 11in;
+}/*# sourceMappingURL=resume.css.map */
