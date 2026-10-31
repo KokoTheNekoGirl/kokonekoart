@@ -1,4 +1,4 @@
 ---
 deployment:
   tasks:
-    - /usr/bin/rsync -av --exclude='.git' --exclude='/.git' --exclude='.gitignore' --exclude='.gitattributes' --exclude='LICENSE' ./ /home/kokoneko/public_html/wp-content/themes/kokonekoart/
+    - /usr/bin/rsync -av --exclude='.git' --exclude='.cpanel.yml' --exclude='.gitignore' --exclude='.gitattributes' --exclude='LICENSE' ./ /home/kokoneko/public_html/wp-content/themes/kokonekoart/
