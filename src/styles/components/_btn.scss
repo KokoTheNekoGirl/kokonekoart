@@ -6,6 +6,7 @@
     display: flex;
     align-items: center;
     border:none;
+    line-height:1;
     width: fit-content;
     position: relative;
     font-size: var(--font-size-sm);
@@ -14,8 +15,8 @@
     }
     &[rel="external"]:hover .btn-text::after,
     &[rel="external"]:hover .btn-text::before,
-    &[rel="external"]:focus .btn-text::after,
-    &[rel="external"]:focus .btn-text::before{
+    &[rel="external"]:focus-visible .btn-text::after,
+    &[rel="external"]:focus-visible .btn-text::before{
         visibility: visible;
         opacity: 1;
     }
@@ -74,7 +75,7 @@
             display: block;
             transition: 0.5s;
         }
-        &:hover::before,&:focus::before{
+        &:hover::before,&:focus-visible::before{
             clip-path: polygon(40% 100%, 60% 100%, 80% 0, 100% 100%, 0 100%, 20% 0);
         }
         .whiskers-left::after, .whiskers-left::before,.whiskers-right::after, .whiskers-right::before{
@@ -132,13 +133,13 @@
         &:hover .whiskers-left::before,
         &:hover .whiskers-right::after,
         &:hover .whiskers-right::before,
-        &:focus,
-        &:focus::after,
-        &:focus::before,
-        &:focus .whiskers-left::after,
-        &:focus .whiskers-left::before,
-        &:focus .whiskers-right::after,
-        &:focus .whiskers-right::before {
+        &:focus-visible,
+        &:focus-visible::after,
+        &:focus-visible::before,
+        &:focus-visible .whiskers-left::after,
+        &:focus-visible .whiskers-left::before,
+        &:focus-visible .whiskers-right::after,
+        &:focus-visible .whiskers-right::before {
             background: rgb(var(--btn-hover));
         }
         &::after,&::before,.whiskers-left::after, .whiskers-left::before,.whiskers-right::after, .whiskers-right::before{
@@ -156,13 +157,13 @@
         &:hover .whiskers-left::before,
         &:hover .whiskers-right::after,
         &:hover .whiskers-right::before,
-        &:focus,
-        &:focus::after,
-        &:focus::before,
-        &:focus .whiskers-left::after,
-        &:focus .whiskers-left::before,
-        &:focus .whiskers-right::after,
-        &:focus .whiskers-right::before{
+        &:focus-visible,
+        &:focus-visible::after,
+        &:focus-visible::before,
+        &:focus-visible .whiskers-left::after,
+        &:focus-visible .whiskers-left::before,
+        &:focus-visible .whiskers-right::after,
+        &:focus-visible .whiskers-right::before{
             background: rgb(var(--white));
             cursor: not-allowed;
         }
@@ -173,14 +174,14 @@
 
     &-secondary{
         background: rgb(var(--secondary));
-        &:hover,&:focus{
+        &:hover,&:focus-visible{
             background: rgb(var(--secondary));
         }
     }
 
     &-cta{
         background: rgb(var(--cta));
-        &:hover,&:focus{
+        &:hover,&:focus-visible{
             background: rgb(var(--cta));
         }
     }
@@ -190,7 +191,7 @@
         background: rgba(var(--white),0.4);
         backdrop-filter: blur(3px);
         color: rgb(var(--black));
-        &:hover,&:focus{
+        &:hover,&:focus-visible{
             background: rgb(var(--white));
         }
         &.locked{
@@ -474,3 +475,5 @@ li img.wp-smiley, li:not(:has(.small)) img.emoji {
     height: calc(var(--checkbox-height) * 1.2);
     animation: dothatopcheck 0.4s ease 0s forwards;
 }
+
+.checkbox-wrapper:has(input:focus-visible) .includes { visibility: visible; opacity: 1; }

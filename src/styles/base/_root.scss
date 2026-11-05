@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'Spinnaker';
-  src: url('/src/assets/fonts/Spinnaker-Regular.woff2') format('woff2');
+  src: url('#{$base-uri}fonts/Spinnaker-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: 'Fuzzy Bubbles';
-  src: url('/src/assets/fonts/FuzzyBubbles-Regular.woff2') format('woff2');
+  src: url('#{$base-uri}fonts/FuzzyBubbles-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: 'Fuzzy Bubbles';
-  src: url('/src/assets/fonts/FuzzyBubbles-Bold.woff2') format('woff2');
+  src: url('#{$base-uri}fonts/FuzzyBubbles-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -67,12 +67,12 @@
     --default-border-radius: 20px;
 }
 
-*:focus{ 
+*:focus-visible{ 
   outline: solid rgb(var(--secondary));
 }
 
 body {
-    background: url("../../assets/background.jpg") no-repeat center center / cover;
+    background: url("#{$base-uri}background.jpg") no-repeat center center / cover;
     background-attachment: fixed;
     background-blend-mode: lighten;
     font-family: var(--font-face-base);
@@ -170,7 +170,7 @@ a:not(.icon,.btn) {
   transition: 0.5s all;
   letter-spacing: 2%;
   text-wrap: balance;
-  &:hover, &:focus {
+  &:hover, &:focus-visible {
     color:rgb(var(--btn-hover));
   }
 }
@@ -183,11 +183,11 @@ button:hover,a{
   cursor: pointer;
 }
 
-a[rel="external"]:not(.icon,.btn),a[rel="external noopener"]:not(.icon,.btn),a[rel="noopener"]:not(.icon,.btn) {
+a[rel="external"]:not(.icon,.btn,.img-link),a[rel="external noopener"]:not(.icon,.btn,.img-link),a[rel="noopener"]:not(.icon,.btn,.img-link) {
   position: relative;
 }
 
-a[rel="external"]:not(.icon,.btn)::after,a[rel="external noopener"]:not(.icon,.btn)::after,a[rel="noopener"]:not(.icon,.btn)::after {
+a[rel="external"]:not(.icon,.btn,.img-link)::after,a[rel="external noopener"]:not(.icon,.btn,.img-link)::after,a[rel="noopener"]:not(.icon,.btn,.img-link)::after {
   font-family: var(--font-awesome);
   font-weight: 900;
   content: "\f08e";
@@ -215,7 +215,7 @@ a[rel="external"]:not(.icon,.btn)::after,a[rel="external noopener"]:not(.icon,.b
     -webkit-text-stroke: 0.3px currentColor;
     paint-order: stroke fill;
 
-    &:hover, &:focus {
+    &:hover, &:focus-visible {
       color: rgb(var(--secondary));
     }
   }

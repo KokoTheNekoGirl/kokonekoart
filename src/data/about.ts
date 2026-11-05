@@ -1,15 +1,12 @@
-// Single source of truth for the About page and the home page quick info.
+// Single source for the About page and the home page quick info.
 // Only the birthday is stored (in age.ts); age, birthday display, and both zodiacs are derived from it.
 
 import { getImage } from 'astro:assets';
-import bisexualIcon from '../assets/symbols/bisexual.png';
-import greysexualIcon from '../assets/symbols/greysexual.png';
+import { BisexualIcon, GreysexualIcon } from '@assets';
 import { getAge, parseBirthday } from './age';
 
 export { getAge };
 
-// Rendered size is set by your .img-icon CSS; this is the generated file width.
-// Use about 2x the displayed width so it stays sharp on high-density screens.
 const ICON_WIDTH = 48;
 
 export const ABOUT = {
@@ -20,8 +17,8 @@ export const ABOUT = {
   personalityType: 'INFJ-T',
   nationalityEmoji: '🇨🇦',
   sexualityIcons: [
-    { src: bisexualIcon, alt: 'Bisexual Flag' },
-    { src: greysexualIcon, alt: 'Greysexual Heart' },
+    { src: BisexualIcon, alt: 'Bisexual Flag' },
+    { src: GreysexualIcon, alt: 'Greysexual Heart' },
   ],
   favouriteColourEmoji: '💜',
   interests: ['Animation', 'Anime', 'Video Games', 'Art', 'Web Design/Development'],
@@ -38,13 +35,11 @@ function ordinal(n: number) {
   return s[(v - 20) % 10] || s[v] || s[0];
 }
 
-/** "August 13<sup>th</sup>" (HTML, render with set:html). */
 export function birthdayHtml(): string {
   const { month, day } = parseBirthday();
   return `${MONTHS[month - 1]} ${day}<sup>${ordinal(day)}</sup>`;
 }
 
-// [Font Awesome icon name, label, start month, start day], latest start first.
 const WESTERN = [
   ['capricorn', 'Capricorn', 12, 22], ['sagittarius', 'Sagittarius', 11, 22],
   ['scorpio', 'Scorpio', 10, 23], ['libra', 'Libra', 9, 23],
@@ -54,7 +49,6 @@ const WESTERN = [
   ['pisces', 'Pisces', 2, 19], ['aquarius', 'Aquarius', 1, 20],
 ] as const;
 
-/** Font Awesome 7 zodiac icon (HTML, render with set:html). */
 export function westernZodiacHtml(): string {
   const { month, day } = parseBirthday();
   const [icon, label] =
@@ -70,13 +64,12 @@ export function chineseZodiac(): string {
   return CHINESE[(((year - 4) % 12) + 12) % 12];
 }
 
-/** Optimized <img> tags for the sexuality icons, built at compile time via astro:assets. */
 async function sexualityHtml(): Promise<string> {
   const imgs = await Promise.all(
     ABOUT.sexualityIcons.map(async ({ src, alt }) => {
       const img = await getImage({ src, width: ICON_WIDTH, format: 'webp' });
       const { width, height } = img.attributes;
-      return `<img class="img-icon" src="${img.src}" alt="${alt}" width="${width}" height="${height}" loading="lazy" decoding="async">`;
+      return `<img class="img-icon" src="${img.src}" alt="${alt}" width="${width}" height="${height}" loading="eager" fetchpriority="high" decoding="async">`;
     }),
   );
   return `<span class="icon-group">${imgs.join('')}</span>`;

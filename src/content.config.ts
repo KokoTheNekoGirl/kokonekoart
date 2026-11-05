@@ -15,6 +15,16 @@ const portfolio = defineCollection({
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
 		}),
+		
 });
 
-export const collections = { portfolio };
+const legal = defineCollection({
+	loader: glob({ base: './src/content/legal', pattern: '**/*.{md,mdx}' }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		updated: z.coerce.date().optional(),
+	}),
+});
+
+export const collections = { portfolio, legal };

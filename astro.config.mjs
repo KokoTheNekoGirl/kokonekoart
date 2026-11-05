@@ -11,16 +11,6 @@ export default defineConfig({
     site: 'https://kokoneko.art',
     trailingSlash: 'never',
     integrations: [mdx(), sitemap(), react(),
-        AutoImport({
-            imports: [{
-                './src/components/ButtonLink.astro': [
-                ['default', 'ButtonLink']
-                ],
-                './src/components/IconLink.astro': [
-                ['default', 'IconLink']
-                ]
-            }]
-        })
     ],
     fonts: [
         {

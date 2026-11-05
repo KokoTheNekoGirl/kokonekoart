@@ -329,7 +329,7 @@ form:has(.forminator-pagination--content){
     }
 
     &:hover,
-    &:focus-within {
+    &:focus-visible-within {
         transform: translateX(calc(100vw - 100%))
     }
 }

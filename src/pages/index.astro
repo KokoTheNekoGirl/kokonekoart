@@ -1,11 +1,8 @@
 ---
+import { Layout } from '@layouts';
 import { Image } from 'astro:assets';
-import Koko from '../assets/koko.gif';
-import CaraLogo from '../assets/symbols/cara-logo.svg';
-import Layout from '../layouts/Layout.astro';
-import AboutQuickInfo from '../components/AboutQuickInfo.astro';
-import SampleArtGallery from '../components/SampleArtGallery.astro';
-// import PortfolioPreview from '../components/PortfolioPreview.astro';
+import { Koko } from '@assets';
+import { ButtonLink, AboutQuickInfo, SampleArtGallery, PortfolioPreview, SocialLinks } from '@components';
 ---
 
 <Layout>
@@ -66,11 +63,7 @@ import SampleArtGallery from '../components/SampleArtGallery.astro';
 			<div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
 				<p>Reach out to me over my main social medias. You can also follow the link below to find me elsewhere or reach out via contact form.</p>
 			</div>
-			<div class="icon-group animate__animated animate__fadeIn" style="--animate-delay: 0.4s;">
-				<IconLink class="primary" href="https://discordapp.com/users/289194094431961089" rel="external" aria-label="Discord Profile Link"><i class="fa-classic fa-brands fa-discord"></i></IconLink>
-				<IconLink class="primary" href="https://bsky.app/profile/kokoneko.art" rel="external" aria-label="Bluesky Profile Link"><i class="fa-classic fa-brands fa-bluesky"></i> </IconLink>
-				<IconLink class="primary" href="https://cara.app/kokonekoart" rel="external" aria-label="Cara Profile Link"><Image src={CaraLogo} alt="Cara Logo" /></IconLink>
-			</div>
+			<SocialLinks showSecondary={false} />
 		</div>
 	</section>
 </Layout>

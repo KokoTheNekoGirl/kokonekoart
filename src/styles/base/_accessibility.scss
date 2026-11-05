@@ -1,45 +1,68 @@
 .motion-control {
-  display: inline;
-  padding-left:0.25em;
-  button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-weight:600;
-    line-height:1.5;
-    padding:0;
-    vertical-align: middle;
-    color:rgb(var(--primary));
-    font-size: var(--font-size-base);
+    display: inline;
+    padding-left: 0.25em;
 
-    .icon {
-      transition: none;
-      i {
-          font-size: var(--font-size-base);
+    .reducedmotion-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      cursor: pointer;
+      font-weight: 600;
+      line-height: 1.5;
+      padding: 0;
+      color: rgb(var(--primary));
+      font-size: var(--font-size-base);
+
+      .icon {
+        transition: none;
+        width: unset;
+        height:unset;
+
+        i {
+          font-size: inherit;
+        }
+      }
+
+    &[aria-pressed="false"] {
+      .icon-off {
+        display: inline-flex;
+      }
+
+      .icon-on {
+        display: none;
       }
     }
 
-    &::after {
-      content: "Enable Reduced Motion";
-      margin-left: 0.25rem;
+    &[aria-pressed="true"] {
+      .icon-off {
+        display: none;
+      }
+
+      .icon-on {
+        display: inline-flex;
+      }
     }
 
-    &:hover {
-      background: transparent !important;
-      border-color: transparent !important;
-      box-shadow: none !important;
-      outline: unset!important;
-      color:rgb(var(--btn-hover));
-    }
+      &::after {
+        content: "Enable Reduced Motion";
+      }
 
-    &:focus-visible {
-      color:rgb(var(--secondary));
-      outline: 2px solid rgb(var(--secondary))!important;
-      outline-offset: 4px;
-      border-color: transparent !important;
+      &:hover {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        color: rgb(var(--btn-hover));
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgb(var(--secondary));
+        outline-offset: 4px;
+      }
     }
   }
-}
 
 .animate__animated:not(.in-view) { 
   animation-play-state: paused;

@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import ReCaptcha from '../assets/symbols/recaptcha.svg';
+import { ReCaptcha } from '@assets';
 ---
 
 <div id="clouds" aria-hidden="true"></div>
@@ -19,7 +19,7 @@ import ReCaptcha from '../assets/symbols/recaptcha.svg';
 </div>
 <div class="custom-recaptcha-badge" aria-label="Site protection">
     <div class="custom-recaptcha-badge__icon">
-        <Image src={ReCaptcha} alt="reCAPTCHA" width={64} height={64} />
+        <Image src={ReCaptcha} alt="reCAPTCHA" width={64} height={64} fetchpriority="high" />
     </div>
     <div class="custom-recaptcha-badge__content">
         <span>protected by reCAPTCHA</span>

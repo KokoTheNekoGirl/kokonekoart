@@ -1,0 +1,79 @@
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    margin-top: 1em;
+}
+
+.accordion-item {
+    background: rgba(var(--white), 0.4);
+    border: 2px solid rgb(var(--black));
+    border-radius: 1.5em;
+    backdrop-filter: blur(3px);
+    scroll-margin-top: 6rem;
+    transition: background 0.3s;
+
+    &[open] {
+        background: rgba(var(--white), 0.7);
+    }
+
+    summary {
+        border-radius: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1em;
+        padding: 0.75em 1.25em;
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+        &:hover h2 {
+            color: rgb(var(--btn-hover));
+        }
+        &:focus-visible-visible {
+            outline: 3px solid rgb(var(--primary));
+            outline-offset: 3px;
+            border-radius: 1.5em;
+        }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            transition: color 0.3s;
+
+            // The global `h2 *` rule gives every descendant a bottom margin; reset it here.
+            > * {
+                margin: 0;
+            }
+            i {
+                color: rgb(var(--primary));
+            }
+        }
+    }
+
+    .accordion-chevron {
+        transition: transform 0.3s;
+    }
+    &[open] > summary .accordion-chevron {
+        transform: rotate(180deg);
+    }
+
+    .accordion-body {
+        padding: 0 1.25em 1em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .accordion-item,
+    .accordion-item summary h2,
+    .accordion-chevron {
+        transition: none;
+    }
+}

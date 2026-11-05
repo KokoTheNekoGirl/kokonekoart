@@ -1,6 +1,6 @@
 ---
+import { PortfolioPiece } from '@layouts';
 import { type CollectionEntry, getCollection, render } from 'astro:content';
-import PortfolioPiece from '../../layouts/PortfolioPiece.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('portfolio');

@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import { socialLinks } from '@data/social-links';
+import IconLink from './IconLink.astro';
+
+interface Props {
+  showSecondary?: boolean;
+}
+
+const {
+  showSecondary = true,
+} = Astro.props;
+
+const primaryLinks = socialLinks.filter(
+  link => link.category === 'primary'
+);
+
+const secondaryLinks = socialLinks.filter(
+  link => link.category === 'secondary'
+);
+---
+
+<div
+  class='icon-group animate__animated animate__fadeIn center'
+  aria-label="Main social profiles"
+>
+  {primaryLinks.map(link => (
+    <IconLink class="primary" href={link.url} rel="external" aria-label={`${link.name} profile`}>
+      {link.icon ? (
+        <i
+          class={`fa-classic fa-brands ${link.icon}`}
+          aria-hidden="true"
+        ></i>
+      ) : link.image ? (
+        <Image
+          src={link.image}
+          alt=""
+          aria-hidden="true"
+        />
+      ) : null}
+    </IconLink>
+  ))}
+</div>
+
+{showSecondary && (
+  <div
+    class='icon-group animate__animated animate__fadeIn center'
+    aria-label="Additional social profiles"
+  >
+    {secondaryLinks.map(link => (
+      <IconLink class="mini" href={link.url} rel="external" aria-label={`${link.name} profile`}>
+        {link.icon ? (
+          <i
+            class={`fa-classic fa-brands ${link.icon}`}
+            aria-hidden="true"
+          ></i>
+        ) : link.image ? (
+          <Image
+            src={link.image}
+            alt=""
+            aria-hidden="true"
+          />
+        ) : null}
+      </IconLink>
+    ))}
+  </div>
+)}

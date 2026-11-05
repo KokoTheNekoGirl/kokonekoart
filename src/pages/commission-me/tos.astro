@@ -1,0 +1,31 @@
+---
+import { Layout } from '@layouts';
+import { getEntry, render } from 'astro:content';
+import { formatDate, isoDate, lastModified } from '@utils/last-modified';
+
+const tos = (await getEntry('legal', 'tos'))!;
+const { Content } = await render(tos);
+
+const pinned = tos.data.updated;
+const updated = pinned ?? lastModified(tos.filePath!);
+const zone = pinned ? 'UTC' : undefined;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: tos.data.title,
+  description: tos.data.description,
+  dateModified: isoDate(updated, zone),
+};
+---
+
+<Layout title={tos.data.title} description={tos.data.description}>
+	<section id="boxed-content">
+		<h1 class="animate__animated animate__fadeInUp">{tos.data.title}</h1>
+		<p class="center">Last Updated: <time datetime={isoDate(updated, zone)}>{formatDate(updated, zone)}</time></p>
+		<div class="accordion">
+			<Content />
+		</div>
+	</section>
+	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Layout>

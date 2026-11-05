@@ -73,7 +73,7 @@
 }
 
 #clouds{
-    background-image: url("../../assets/cloud_anim.png");
+    background-image: url("#{$base-uri}cloud_anim.png");
     background-size: cover;
     position: sticky;
     margin-bottom: -100vh;

@@ -1,0 +1,213 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import { ADD_ONS, BACKGROUNDS, CURRENCY, DEFAULT_SELECTION, KOFI_URL, SHOTS, STYLES, resolve, type Option } from '@data/commissions';
+
+const initial = resolve(DEFAULT_SELECTION);
+const sel = initial.selection;
+
+const groups: { name: string; id: string; heading: string; options: readonly Option[]; checked: string }[] = [
+  { name: 'char-shots', id: 'char-shot-group', heading: 'Character Shot', options: SHOTS, checked: sel.shot },
+  { name: 'art-style', id: 'art-style-group', heading: 'Art Finish', options: STYLES, checked: sel.style },
+  { name: 'bg', id: 'bg-group', heading: 'Background', options: BACKGROUNDS, checked: sel.bg },
+];
+---
+
+<section class="comms-section animate__animated animate__fadeIn" data-commission>
+  <div class="art-sample-cont">
+    <div
+      id="art-sample"
+      role="img"
+      aria-label={`Preview: ${initial.summary}`}
+      data-char-shot={initial.preview.shot}
+      data-art-style={initial.preview.style}
+    >
+    </div>
+    <div class="art-bg" data-bg={initial.preview.bg}></div>
+  </div>
+
+  <div class="comms-btn">
+    {
+      groups.map((g) => (
+        <>
+          <h3 id={`${g.name}-heading`}>{g.heading}</h3>
+          <div class="btn-group" id={g.id} role="radiogroup" aria-labelledby={`${g.name}-heading`}>
+            {g.options.map((o) => {
+              const locked = g.name === 'bg' && initial.lockedBackgrounds.includes(o.id as never);
+              return (
+                <div class="button">
+                  <input
+                    type="radio"
+                    id={`${g.name}-${o.id}`}
+                    name={g.name}
+                    value={o.id}
+                    checked={g.checked === o.id}
+                    disabled={locked}
+                    aria-describedby={g.name === 'bg' ? 'bg-lock-hint' : undefined}
+                  />
+                  <label class:list={['btn', 'btn-comms', { locked }]} for={`${g.name}-${o.id}`}>
+                    {o.label}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      ))
+    }
+    <p id="bg-lock-hint" class="sr-only">
+      Pattern and Scene backgrounds need a Flatcolor or Shaded finish, or a Ref Sheet.
+    </p>
+
+    <h4>Add-ons</h4>
+    <div class="checkboxes">
+      {
+        ADD_ONS.map((a) => (
+          <div class="checkbox-wrapper">
+            <input
+              type="checkbox"
+              id={`add-on-${a.id}`}
+              name="add-ons"
+              value={a.id}
+              checked={sel.addOns.includes(a.id)}
+              aria-labelledby={`add-on-${a.id}-text`}
+              aria-describedby={a.info ? `add-on-${a.id}-info` : undefined}
+            />
+            <label for={`add-on-${a.id}`} class="check-box"><span class="sr-only">{a.label}</span></label>
+            <p class="large-p text-label" id={`add-on-${a.id}-text`} data-for={`add-on-${a.id}`}>
+              {a.label}
+              {a.info && (
+                <>
+                  <i class="fa-solid fa-circle-info" aria-hidden="true" />
+                  <span class="includes" id={`add-on-${a.id}-info`}>
+                    {a.info}
+                  </span>
+                </>
+              )}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="mini-box">
+    <h3 class="total">
+      <span class="total-label">Total:</span>$<span class="price" data-total>{initial.total}</span>.00
+      <span class="sr-only">{CURRENCY}</span>
+    </h3>
+    <p class="sr-only" role="status" data-status>Total ${initial.total}.00 {CURRENCY}: {initial.summary}</p>
+    <div class="cta-buttons">
+      <ButtonLink class="primary paypal-link" href={initial.paypalUrl} rel="external">Pay directly</ButtonLink>
+      <ButtonLink class="comms form-link" href={initial.requestUrl}>Request form</ButtonLink>
+      <ButtonLink class="comms kofi-link" href={KOFI_URL} rel="external">
+        <i class="fa-brands fa-ko-fi"></i> Kofi
+      </ButtonLink>
+    </div>
+  </div>
+</section>
+
+<script>
+  import {
+    CURRENCY,
+    DEFAULT_SELECTION,
+    REF_SHEET,
+    resolve,
+    type AddOnId,
+    type BgId,
+    type Selection,
+    type ShotId,
+    type StyleId,
+  } from '@data/commissions';
+
+  const root = document.querySelector<HTMLElement>('[data-commission]');
+
+  if (root) {
+    const artSample = root.querySelector<HTMLElement>('#art-sample')!;
+    const artBg = root.querySelector<HTMLElement>('.art-bg')!;
+    const price = root.querySelector<HTMLElement>('[data-total]')!;
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const paypal = root.querySelector<HTMLAnchorElement>('.paypal-link')!;
+    const request = root.querySelector<HTMLAnchorElement>('.form-link')!;
+    const radios = root.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+    const checks = root.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+
+    let state: Selection = structuredClone(DEFAULT_SELECTION);
+
+    const withoutRef = (ids: AddOnId[]) => ids.filter((id) => id !== REF_SHEET);
+
+    function render() {
+      const r = resolve(state);
+      state = r.selection;
+
+      radios.forEach((input) => {
+        if (input.name === 'bg') {
+          const locked = r.lockedBackgrounds.includes(input.value as BgId);
+          input.checked = state.bg === input.value;
+          input.disabled = locked;
+          input.labels?.[0]?.classList.toggle('locked', locked);
+        } else {
+          // With a Ref Sheet the shot/finish groups show nothing selected.
+          const current = input.name === 'char-shots' ? state.shot : state.style;
+          input.checked = !r.refSheet && current === input.value;
+        }
+      });
+      checks.forEach((input) => {
+        input.checked = state.addOns.includes(input.value as AddOnId);
+      });
+
+      artSample.dataset.charShot = r.preview.shot;
+      artSample.dataset.artStyle = r.preview.style;
+      artBg.dataset.bg = r.preview.bg;
+      artSample.setAttribute('aria-label', `Preview: ${r.summary}`);
+
+      price.textContent = String(r.total);
+      status.textContent = `Total $${r.total}.00 ${CURRENCY}: ${r.summary}`;
+      paypal.href = r.paypalUrl;
+      request.href = r.requestUrl;
+    }
+
+    root.addEventListener('change', (e) => {
+      const input = e.target;
+      if (!(input instanceof HTMLInputElement)) return;
+      const next: Selection = { ...state, addOns: [...state.addOns] };
+
+      switch (input.name) {
+        case 'char-shots':
+          next.shot = input.value as ShotId;
+          next.addOns = withoutRef(next.addOns); // picking a shot leaves Ref Sheet mode
+          break;
+        case 'art-style':
+          next.style = input.value as StyleId;
+          next.addOns = withoutRef(next.addOns);
+          break;
+        case 'bg':
+          next.bg = input.value as BgId;
+          break;
+        case 'add-ons':
+          next.addOns = input.checked
+            ? [...next.addOns, input.value as AddOnId]
+            : next.addOns.filter((id) => id !== input.value);
+          break;
+      }
+
+      state = next;
+      render();
+    });
+
+    // Clicking the add-on text toggles its checkbox (the visual box is a separate label).
+    root.addEventListener('click', (e) => {
+      const text = (e.target as Element).closest<HTMLElement>('[data-for]');
+      if (text) document.getElementById(text.dataset.for!)?.click();
+    });
+
+    render(); // also overrides any form state the browser restored on reload
+  }
+</script>
+
+<style>
+  .total-label {
+    margin-right: 0.5em;
+  }
+</style>

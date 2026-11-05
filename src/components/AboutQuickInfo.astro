@@ -1,5 +1,5 @@
 ---
-import { getAboutItems, getAge } from '../data/about';
+import { getAboutItems } from '@data/about';
 
 const items = (await getAboutItems()).filter((i) => i.quick);
 ---
@@ -43,7 +43,7 @@ const items = (await getAboutItems()).filter((i) => i.quick);
 <script>
   // The site is static, so the age baked in at build time can go stale.
   // Recompute it in the browser from the same birthday so it flips on the day itself.
-  import { getAge } from '../data/about';
+  import { getAge } from '@data/about';
   const age = String(getAge());
   document.querySelectorAll<HTMLElement>('[data-age]').forEach((el) => {
     el.textContent = age;

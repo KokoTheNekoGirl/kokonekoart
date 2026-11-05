@@ -10,6 +10,17 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
+    "paths": {
+      "@assets": ["./src/assets/index.ts"],
+      "@assets/*": ["./src/assets/*"],
+      "@consts": ["./src/consts.ts"],
+      "@components": ["./src/components/index.ts"],
+      "@components/*": ["./src/components/*"],
+      "@data/*": ["./src/data/*"],
+      "@layouts": ["./src/layouts/index.ts"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
   }
 }

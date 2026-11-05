@@ -1,9 +1,43 @@
 ---
-import Layout from '../layouts/ComingSoon.astro';
+import { Layout } from '@layouts';
+import { SITE_TITLE } from '@consts';
+import { Image } from 'astro:assets';
+import { Profile } from '@assets';
+import { ButtonLink, SocialLinks } from '@components';
+import { getAboutItems } from '@data/about';
+const items = await getAboutItems();
 ---
 
 <Layout
 	title="About Me"
-	description="Lorem ipsum dolor sit amet"
+	description="Nice to meet you! I'm Jess / Koko, a creative web designer, developer, and furry digital artist. Come connect with me!"
 >
+<section class="about-bio-section">
+	<div class="img-wrapper animate__animated animate__fadeIn">
+		<a class="img-link" href="https://www.teamhuman.org/" rel="noopener" target="_blank" aria-describedby='external-hint'>
+			<Image class="round-img" src={Profile} alt={`${SITE_TITLE}'s Avatar. #TeamHuman`} loading="eager" fetchpriority="high" />
+		</a>
+		<p style="text-align:center;">Art by <a href="https://toyhou.se/fawnlynx" rel="external noopener" target="_blank">fawnlynx</a></p>
+	</div>
+	<div class="info-viewport ">
+		<ul class="about-quick-info animate__animated animate__fadeIn">
+			{items.map((i) => (
+				<li><strong>{i.label}</strong> <Fragment set:html={i.html} /></li>
+			))}
+		</ul>
+	</div>
+</section>
+<section id="boxed-content">
+	<div class="bio-content">
+		<h1 class="animate__animated animate__fadeInUp" itemprop="name">About Me ≽^•⩊•^≼</h1>
+		<p>Hi! I’m Jess, also known as Koko. I’m a full-time website designer and developer and accept digital furry art commissions on the side. My work blends creativity, accessibility, and efficiency. I love creating things that make an impact.</p>
+		<p>I’m not perfect, I’m still growing in my journey, taking every opportunity I can to learn and expand my skills. Lately, I’ve been exploring different coding environments that weren’t covered in school, such as ExpressionEngine and Phaser.io. I always want to keep learning and challenging myself.</p>
+		<p>Outside of work, I’m a huge Pokémon fan and have huge love for cats, unicorns, and all things rainbow-colored. As someone on the AuDHD spectrum, I sometimes struggle with making connections, but I always try my best!</p>
+		<p>If you’re looking for a website that stands out, a digital artwork, or just someone new to follow, I’d love to connect!</p>
+		<div class="cta-buttons animate__animated animate__fadeIn">
+			<ButtonLink class="primary" href="/contact/">Connect with me</ButtonLink>
+		</div>
+		<SocialLinks />
+	</div>
+</section>
 </Layout>

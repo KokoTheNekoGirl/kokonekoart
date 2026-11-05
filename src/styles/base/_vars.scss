@@ -1,4 +1,4 @@
-$base-uri: "../../assets/";
+$base-uri: "/src/assets/";
 
 @mixin sample($file,$fit: contain) {
   background: url("#{$base-uri}samples/#{$file}") no-repeat center center / $fit;

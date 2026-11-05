@@ -1,0 +1,55 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  icon: string;
+  open?: boolean;
+  group?: string;
+}
+
+const { id, title, icon, open = false, group = 'tos' } = Astro.props;
+---
+
+<details class="accordion-item" id={id} name={group} open={open}>
+  <summary>
+    <h2>
+      <i class={`fa-solid fa-${icon}`} aria-hidden="true"></i>
+      <span>{title}</span>
+    </h2>
+    <i class="fa-solid fa-chevron-down accordion-chevron" aria-hidden="true"></i>
+  </summary>
+  <div class="accordion-body">
+    <slot />
+  </div>
+</details>
+
+<script>
+  // Browsers without exclusive <details name> support (older than ~2024): close the others by hand.
+  if (!('name' in HTMLDetailsElement.prototype)) {
+    document.addEventListener(
+      'toggle',
+      (e) => {
+        const el = e.target;
+        const group = el instanceof HTMLDetailsElement ? el.getAttribute('name') : null;
+        if (!(el instanceof HTMLDetailsElement) || !el.open || !group) return;
+        document.querySelectorAll<HTMLDetailsElement>(`details[name="${group}"]`).forEach((d) => {
+          if (d !== el) d.open = false;
+        });
+      },
+      true,
+    );
+  }
+
+  // Links that should open that section.
+  function openHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = id ? document.getElementById(id) : null;
+    const section = target?.closest('details');
+    if (section && !section.open) {
+      section.open = true;
+      requestAnimationFrame(() => target!.scrollIntoView());
+    }
+  }
+  openHash();
+  addEventListener('hashchange', openHash);
+</script>
