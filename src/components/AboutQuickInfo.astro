@@ -1,0 +1,74 @@
+---
+import { getAboutItems, getAge } from '../data/about';
+
+const items = (await getAboutItems()).filter((i) => i.quick);
+---
+
+<div class="info-viewport">
+  <h2 class="info-viewport-title animate__animated animate__fadeIn">I am...</h2>
+  <div class="swiper about-swiper animate__animated animate__fadeIn">
+    <ul class="swiper-wrapper">
+      {items.map((i) => <li class="swiper-slide" set:html={i.html} />)}
+    </ul>
+  </div>
+</div>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay, EffectFade } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/effect-fade';
+
+  const wrapper = document.querySelector('.about-swiper .swiper-wrapper');
+  if (wrapper) {
+    const slides = Array.from(wrapper.children);
+    for (let i = slides.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [slides[i], slides[j]] = [slides[j], slides[i]];
+    }
+    wrapper.append(...slides);
+  }
+
+  new Swiper('.about-swiper', {
+    modules: [Autoplay, EffectFade],
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    speed: 750,
+    loop: true,
+    autoplay: { delay: 2500, disableOnInteraction: false, pauseOnMouseEnter: true },
+    allowTouchMove: true,
+  });
+</script>
+
+<script>
+  // The site is static, so the age baked in at build time can go stale.
+  // Recompute it in the browser from the same birthday so it flips on the day itself.
+  import { getAge } from '../data/about';
+  const age = String(getAge());
+  document.querySelectorAll<HTMLElement>('[data-age]').forEach((el) => {
+    el.textContent = age;
+  });
+</script>
+
+<style>
+  .swiper {
+    width: 300px;
+    height: 96px;
+  }
+  .about-swiper {
+    overflow: hidden;
+  }
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .swiper-slide:hover{
+    cursor: grab;
+  }
+  .swiper-slide :global(.icon-group) {
+    display: inline-flex;
+    gap: 0.5rem;
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import Yarn from '../assets/symbols/yarn.svg';
+import Layout from '../layouts/Layout.astro';
+
+---
+
+<style lang="scss">
+section.not-found {
+    margin-top:20vh;
+    padding-bottom:0;
+
+    h1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 0.25em;
+        padding: 0 .25em;
+        img {
+            max-width: var(--font-size-xxlg);
+            width: 100%;
+        }
+    }
+}
+.page-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 2em;
+}
+</style>
+
+<Layout
+    title="Page Not Found"
+    description="Oops! This page doesn't exist. Return to KokoNekoArt."
+    noindex={true}
+>
+    <section class="not-found">
+        <h1 itemprop="name">
+            <i class="fa-solid fa-cat"></i>
+            404 - Page Not Found
+            <Image src={Yarn} alt="Icon of a ball of yarn." width={64} height={64} />
+        </h1>
+    </section>
+    <section class="page-content">
+        <p><strong>Oh no! The page ran off like a curious kitten chasing a shooting star.</strong></p>
+        <ButtonLink class="primary" href="/"><i class="fa-solid fa-left-long"></i> Go back to home.</ButtonLink>
+    </section>
+</Layout>

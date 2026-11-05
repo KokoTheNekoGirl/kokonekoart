@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'>;
+
+const {
+    href,
+    class: className,
+    rel,
+    ...props
+} = Astro.props;
+
+const isPrimary = className === 'primary';
+const relTokens = new Set(rel?.split(/\s+/).filter(Boolean));
+const isExternal = relTokens.has('external');
+if (isExternal) relTokens.add('noopener');
+const relValue = relTokens.size ? [...relTokens].join(' ') : undefined;
+---
+
+<a href={href} role="button" class:list={['btn', className && `btn-${className}`]} {...props} rel={relValue} aria-describedby={isExternal ? 'external-hint' : undefined} target={isExternal ? '_blank' : undefined} itemprop="url">
+    {isPrimary && <span class="whiskers-left"></span>}
+    <span itemprop="name"><slot /></span>
+    {isPrimary && <span class="whiskers-right"></span>}
+</a>

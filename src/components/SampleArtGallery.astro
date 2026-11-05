@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import { getSampleArt } from '../data/sample-art';
+
+const art = getSampleArt();
+---
+
+<div class="info-viewport img-only">
+  <div class="viewport-overlay"></div>
+  <div class="swiper sample-art-swiper animate__animated animate__fadeIn">
+    <ul class="swiper-wrapper viewport-content">
+      {
+        art.map((a) => (
+          <li class="swiper-slide img-group">
+            <Image class="art-img" src={a.src} alt={a.alt} width={360} densities={[1, 2]} />
+            <span class="img-caption">{a.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay, EffectFade } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/effect-fade';
+
+  new Swiper('.sample-art-swiper', {
+    modules: [Autoplay, EffectFade],
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    speed: 750,
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true },
+  });
+</script>
+
+<style>
+  .swiper {
+    width: 360px;
+    height: 360px;
+  }
+  .sample-art-swiper {
+    overflow: hidden;
+  }
+  .swiper-wrapper {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .swiper-slide:hover{
+    cursor: grab;
+  }
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

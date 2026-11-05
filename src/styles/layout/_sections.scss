@@ -1,0 +1,134 @@
+// section:not(.hero-section,.list-container,.about-bio-section){
+//     padding-bottom: 100px;
+// }
+section {
+    padding-bottom: 100px;
+}
+.hero{
+    &-section{
+        margin-bottom: 100px;
+        & *{
+            margin: 0;
+        }
+    }
+    &-content{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        gap:1em;
+
+        .cta-buttons {
+            justify-content: center;
+        }
+    }
+    &-img{
+        width:500px;
+        height:500px;
+        position: absolute;
+        top:0;
+        right:-10%;
+        z-index:1;
+    }
+}
+
+.about,.commissions,.portfolio{
+    &-section{
+        display:grid;
+        gap: 50px 100px;
+
+        .info-viewport{
+            &-title{
+            position: absolute;
+            top: 1em;
+            left: 1.5em;
+            }
+        }
+        .info-viewport:not(.img-only){
+            li,a{
+                font-size: 2rem;
+                z-index: 1;
+            }
+        }
+
+        .info-viewport.img-only{
+            aspect-ratio: 1/1;
+            img{
+                z-index: -1 !important;
+            }
+        }
+
+        .mini-box{
+            display:flex;
+            flex-direction: column;
+            gap:0.5em;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            & *{
+                margin:0;
+            }
+        }
+    }
+}
+
+.about-section {
+    grid-template-columns: 61.5% 30%;
+}
+
+.commissions-section {
+    grid-template-columns: 30% 61.5%;
+}
+
+.comms-section{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: auto;
+    gap:2em;
+    margin-top: 1em;
+    .add-ons{
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+    }
+    .mini-box{
+        margin-top: 1em;
+        display: flex;
+        flex-direction: column;
+        gap:1em;
+        align-items: center;
+        text-align: center;
+    }
+    .checkboxes{
+        display: flex;
+        gap:1em;
+        width: max-content;
+    }
+}
+
+.contact-section {
+    display: flex;
+    gap:2em;
+    .info-viewport {
+        height:fit-content;
+    }
+    .mini-box{
+        max-width: fit-content;
+        display:flex;
+        margin: 0 auto;
+        flex-direction: column;
+        gap:0.5em;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        & *:not(.paw-icon,.icon-group){
+            margin:0;
+        }
+        p{
+            max-width: 600px;
+        }
+    }
+}
+
+.about-bio-section {
+    padding:50px 0;
+}

@@ -1,59 +1,76 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { Image } from 'astro:assets';
+import Koko from '../assets/koko.gif';
+import CaraLogo from '../assets/symbols/cara-logo.svg';
+import Layout from '../layouts/Layout.astro';
+import AboutQuickInfo from '../components/AboutQuickInfo.astro';
+import SampleArtGallery from '../components/SampleArtGallery.astro';
+// import PortfolioPreview from '../components/PortfolioPreview.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to
-				build a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your{' '}
-				<code>astro.config.mjs</code> file. You can customize your setup with{' '}
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like
-				Tailwind, React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>
-					Edit this page in <code>src/pages/index.astro</code>
-				</li>
-				<li>
-					Edit the site header items in <code>src/components/Header.astro</code>
-				</li>
-				<li>
-					Add your name to the footer in <code>src/components/Footer.astro</code>
-				</li>
-				<li>
-					Check out the included blog posts in <code>src/content/blog/</code>
-				</li>
-				<li>
-					Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code>
-				</li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to{' '}
-				<a href="https://docs.astro.build/">read the docs</a> or{' '}
-				<a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out{' '}
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a> by{' '}
-				<a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout>
+	<section class="info-viewport hero-section">
+		<div class="hero-content">
+			<h1 class="animate__animated animate__fadeInUp" itemprop="name">Hello! I'm Jess or Koko.</h1>
+			<div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
+				<p>I do lots of things, but <strong>mainly furry digital art</strong> and <strong>web design &amp; development</strong>. Check out my work and consider commissioning me or hiring me as a freelancer!</p>
+			</div>
+			<div class="cta-buttons animate__animated animate__fadeIn" style="--animate-delay: 0.4s;">
+				<ButtonLink class="primary" href="/portfolio">View portfolio</ButtonLink>
+				<ButtonLink class="primary" href="/commission-me/request/">Commission me</ButtonLink>
+			</div>
+		</div>
+		<div class="spacer"></div>
+		<Image src={Koko} class="hero-img animate__animated animate__fadeIn" alt="An animated gif of my fursona Koko drawing on my digital tablet." loading="eager" fetchpriority="high" />
+	</section>
+	<section class="about-section">
+		<div class="mini-box">
+			<h2 class="animate__animated animate__fadeInUp">About me</h2>
+			<div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
+				<p>I am a lot of things, and I’m proud of it! Learn more about me and what I do.</p>
+			</div>
+			<div class="cta-buttons animate__animated animate__fadeIn" style="--animate-delay: 0.4s;">
+				<ButtonLink class="primary" href="/about-me/" aria-label="Learn more about me.">Learn more</ButtonLink>
+			</div>
+		</div>
+		<AboutQuickInfo />
+	</section>
+	<section class="commissions-section">
+		<SampleArtGallery />
+		<div class="mini-box">
+			<h2 class="animate__animated animate__fadeInUp">Commission me</h2>
+			<div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
+				<p>I have affordable commission prices for my digital art that scale depending on the effort. I have interactive buttons that’ll give you an estimate based on the options selected.</p>
+			</div>
+			<div class="cta-buttons animate__animated animate__fadeIn" style="--animate-delay: 0.4s;">
+				<ButtonLink class="primary" href="/commission-me/">View prices</ButtonLink>
+				<ButtonLink class="primary" href="/commission-me/request/">Request now</ButtonLink>
+			</div>
+		</div>
+	</section>
+	<section class="portfolio-section">
+		<div class="mini-box">
+			<h2 class="animate__animated animate__fadeInUp">My portfolio</h2>
+			<div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
+				<p>I have industry experience in designing &amp; building websites from the ground up. View my best work to see what I’m capable of and consider hiring me as a freelancer!</p>
+			</div>
+			<div class="cta-buttons animate__animated animate__fadeIn" style="--animate-delay: 0.4s;">
+				<ButtonLink class="primary" href="/portfolio/">View portfolio</ButtonLink>
+			</div>
+		</div>
+		<!-- <PortfolioPreview /> -->
+	</section>
+	<section class="contact-section">
+		<div class="mini-box">
+			<h2 class="animate__animated animate__fadeInUp">Contact me</h2>
+			<div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
+				<p>Reach out to me over my main social medias. You can also follow the link below to find me elsewhere or reach out via contact form.</p>
+			</div>
+			<div class="icon-group animate__animated animate__fadeIn" style="--animate-delay: 0.4s;">
+				<IconLink class="primary" href="https://discordapp.com/users/289194094431961089" rel="external" aria-label="Discord Profile Link"><i class="fa-classic fa-brands fa-discord"></i></IconLink>
+				<IconLink class="primary" href="https://bsky.app/profile/kokoneko.art" rel="external" aria-label="Bluesky Profile Link"><i class="fa-classic fa-brands fa-bluesky"></i> </IconLink>
+				<IconLink class="primary" href="https://cara.app/kokonekoart" rel="external" aria-label="Cara Profile Link"><Image src={CaraLogo} alt="Cara Logo" /></IconLink>
+			</div>
+		</div>
+	</section>
+</Layout>

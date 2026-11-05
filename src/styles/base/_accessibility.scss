@@ -1,0 +1,75 @@
+.motion-control {
+  display: inline;
+  padding-left:0.25em;
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight:600;
+    line-height:1.5;
+    padding:0;
+    vertical-align: middle;
+    color:rgb(var(--primary));
+    font-size: var(--font-size-base);
+
+    .icon {
+      transition: none;
+      i {
+          font-size: var(--font-size-base);
+      }
+    }
+
+    &::after {
+      content: "Enable Reduced Motion";
+      margin-left: 0.25rem;
+    }
+
+    &:hover {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      outline: unset!important;
+      color:rgb(var(--btn-hover));
+    }
+
+    &:focus-visible {
+      color:rgb(var(--secondary));
+      outline: 2px solid rgb(var(--secondary))!important;
+      outline-offset: 4px;
+      border-color: transparent !important;
+    }
+  }
+}
+
+.animate__animated:not(.in-view) { 
+  animation-play-state: paused;
+}
+
+.sr-only {
+  position:    absolute !important;
+  overflow:    hidden   !important;
+  white-space: nowrap   !important;
+  width:   1px !important;
+  height:  1px !important;
+  margin: -1px !important;
+  padding: 0   !important;
+  border:  0   !important;
+  clip: rect(1px 1px 1px 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+}
+
+html.reduce-motion {
+  .motion-control button::after {
+    content: "Disable Reduced Motion";
+  }
+  #star-container .star {
+    animation: none !important;
+  }
+
+  .animate__animated {
+    animation: none !important;
+    opacity: 1;
+    visibility: visible;
+  }
+}

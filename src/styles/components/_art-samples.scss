@@ -1,0 +1,91 @@
+@use '../base/vars' as *;
+
+#art-sample[data-char-shot="hs"][data-art-style="sketch"] {
+    @include sample("HS-Sketch-Transparent.png");
+}
+#art-sample[data-char-shot="hs"][data-art-style="line"] {
+    @include sample("HS-Lines-Transparent.png");
+}
+#art-sample[data-char-shot="hs"][data-art-style="flat"] {
+    @include sample("HS-Color-Transparent.png");
+}
+#art-sample[data-char-shot="hs"][data-art-style="shaded"] {
+    @include sample("HS-Shaded-Transparent.png");
+}
+
+#art-sample[data-char-shot="hb"][data-art-style="sketch"] {
+    @include sample("HB-Sketch-Transparent.png");
+}
+#art-sample[data-char-shot="hb"][data-art-style="line"] {
+    @include sample("HB-Lines-Transparent.png");
+}
+#art-sample[data-char-shot="hb"][data-art-style="flat"] {
+    @include sample("HB-Color-Transparent.png");
+}
+#art-sample[data-char-shot="hb"][data-art-style="shaded"] {
+    @include sample("HB-Shaded-Transparent.png");
+}
+
+#art-sample[data-char-shot="fb"][data-art-style="sketch"] {
+    @include sample("FB-Sketch-Transparent.png");
+}
+#art-sample[data-char-shot="fb"][data-art-style="line"] {
+    @include sample("FB-Lines-Transparent.png");
+}
+#art-sample[data-char-shot="fb"][data-art-style="flat"] {
+    @include sample("FB-Color-Transparent.png");
+}
+#art-sample[data-char-shot="fb"][data-art-style="shaded"] {
+    @include sample("FB-Shaded-Transparent.png");
+}
+
+#art-sample[data-char-shot="chibi"][data-art-style="sketch"] {
+    @include sample("Chibi-Sketch-Transparent.png");
+}
+#art-sample[data-char-shot="chibi"][data-art-style="line"] {
+    @include sample("Chibi-Lineart-Transparent.png");
+}
+#art-sample[data-char-shot="chibi"][data-art-style="flat"] {
+    @include sample("Chibi-Color-Transparent.png");
+}
+#art-sample[data-char-shot="chibi"][data-art-style="shaded"] {
+    @include sample("Chibi-Shaded-Transparent.png");
+}
+
+#art-sample[data-char-shot="ref"] {
+    @include sample("Ref-Sample.png");
+}
+
+#art-sample {
+    height: 100%;
+    width: 100%;
+}
+
+.art-sample-cont {
+    max-height: 400px;
+    position: relative;
+}
+
+.art-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 3em;
+
+    &[data-bg="trans"] {
+        @include sample("Trans-Bg.jpg", cover);
+        opacity: 0.6;
+    }
+    &[data-bg="color"] {
+        background: linear-gradient(135deg, rgba(var(--white), 1) 0%, rgba(var(--primary), 1) 100%);
+    }
+    &[data-bg="pattern"] {
+        @include sample("Pattern-Bg.png", cover);
+    }
+    &[data-bg="scene"] {
+        @include sample("Scene-Bg.png", cover);
+    }
+}

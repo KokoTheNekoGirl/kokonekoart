@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'>;
+
+const {
+    href,
+    class: className,
+    rel,
+    ...props
+} = Astro.props;
+
+const isPaw = className === 'primary';
+const relTokens = new Set(rel?.split(/\s+/).filter(Boolean));
+const isExternal = relTokens.has('external');
+if (isExternal) relTokens.add('noopener');
+const relValue = relTokens.size ? [...relTokens].join(' ') : undefined;
+
+const Wrapper = isPaw ? 'div' : Fragment;
+const wrapperProps = isPaw ? { class: 'paw-icon' } : {};
+---
+
+<Wrapper {...wrapperProps}>
+    <a href={href} role="button" class:list={['icon', className && `icon-${className}`]} {...props} rel={relValue} aria-describedby={isExternal ? 'external-hint' : undefined} target={isExternal ? '_blank' : undefined} itemprop="url">
+        <span itemprop="name" aria-hidden="true"><slot /></span>
+        {isPaw && (
+            <>
+                <span class="toe-beans toe-bean-1"></span>
+                <span class="toe-beans toe-bean-2"></span>
+                <span class="toe-beans toe-bean-3"></span>
+                <span class="toe-beans toe-bean-4"></span>
+            </>
+        )}
+    </a>
+</Wrapper>

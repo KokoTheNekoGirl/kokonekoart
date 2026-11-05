@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import ReCaptcha from '../assets/symbols/recaptcha.svg';
+---
+
+<div id="clouds" aria-hidden="true"></div>
+<div id="star-container" aria-hidden="true"></div>
+
+<div class="commission-goal">
+    <div class="wrapper">
+        <div class="small">
+            <p>My services are now PWYW over on my <a href="https://ko-fi.com/kokonekogirl" target="_blank" rel="external" aria-describedby="external-hint">Kofi</a>!</p>
+        </div>
+        <div class="bar-wrapper">
+            <div class="bar" style="width:7%"></div>
+            <span class="goal-label">7% to Goal</span>
+        </div>
+    </div>
+</div>
+<div class="custom-recaptcha-badge" aria-label="Site protection">
+    <div class="custom-recaptcha-badge__icon">
+        <Image src={ReCaptcha} alt="reCAPTCHA" width={64} height={64} />
+    </div>
+    <div class="custom-recaptcha-badge__content">
+        <span>protected by reCAPTCHA</span>
+    </div>
+</div>
+
+<script defer>
+document.addEventListener("DOMContentLoaded", (event) => {
+    const starContainer = document.getElementById("star-container");
+
+    //Math.seedrandom("CDR");
+    let stars = ["✦", "✧", "★", "✬", "✯", "✵", "✶", "✷", "✹", "✸"];
+
+    for (let i = 0; i < 200; i++) {
+        const element = document.createElement("div");
+        element.style.top = `${Math.random() * 100}%`;
+        element.style.left = `${Math.random() * 100}%`;
+        let sizeX = Math.random() * 7 + 1;
+        let sizeY = ~~(Math.random() * 3) + 1;
+        //element.style.width = `${sizeX}px`;
+        //element.style.height = `${sizeX}px`;
+        element.textContent = stars[Math.floor(Math.random() * stars.length)];
+        element.style.fontSize = sizeX + "px";
+        element.style.animation = `${
+            7000 / sizeX + Math.random() * (7000 / sizeX)
+        }ms linear ${Math.random() * 5000}ms alternate infinite twinkle`;
+        starContainer.appendChild(element);
+        element.setAttribute("class", "star");
+    }
+});
+</script>
