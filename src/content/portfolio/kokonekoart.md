@@ -10,7 +10,7 @@ featured: true
 slides:
   - title: Context
     content: |
-      Initially, I planned to have two separated sites dedicated to my [commission based digital art](/portfolio/kokonekoart-prototype) and my web portfolio site open to freelancing offers. When looking at the costs to maintain and host, I decided to merge both into one site. I was advised against this by my professors in college, but unfortunately I did not have the resources available to me at the time to keep the two sides of myself separated. I built that initial site in a [custom WordPress theme](https://github.com/KokoTheNekoGirl/kokonekoart), since it was what I could deploy the quickest with what I knew. 
+      Initially, I planned to have two separated sites dedicated to my [commission based digital art](/portfolio/kokonekoart-prototype) and my web portfolio site open to freelancing offers. When looking at the costs to maintain and host, I decided to merge both into one site. I was advised against this by my professors in college, but unfortunately I did not have the resources available to me at the time to keep the two sides of myself separated. I built that initial site in a [custom WordPress theme](https://github.com/KokoTheNekoGirl/kokonekoart-theme), since it was what I could deploy the quickest with what I knew. 
 
       Later on, I decided to lower hosting costs by restructuring my entire portfolio site into a different framework where I don't pay for hosting. I ultimately decided on Astro, with some TypeScript, to offer a balance of dynamic, reusable components with static content. This instance is now live via Vercel deployment and is version controlled on my GitHub. As of right now, I only repay my annual domain renewal.
     images:
@@ -71,7 +71,7 @@ slides:
 
 finalText: "Well, you’re looking at it! ≽^•⩊•^≼"
 links:
-  github: https://github.com/KokoTheNekoGirl/kokonekoart-rebuilt
+  github: https://github.com/KokoTheNekoGirl/kokonekoart
   site: https://kokoneko.art
 finalNote: This current site is live and version controlled, receiving continuous content updates and improvements.
 
