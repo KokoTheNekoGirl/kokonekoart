@@ -65,6 +65,9 @@ slides:
       Auditing which libraries I needed and which plugins I rebuilt was another challenge. Replacing custom fields for typed, validated collections was the fun part. I also had to modify my slider content to enable swiper initiation, add in SEO meta and maintain optimization myself, and completely rebuild my payment and contact forms from Forminator. I followed documentaion and researched all I could for the backend functionality. I feel I understand the frontend more than the backend.
 
       I had a lot of fun building this project and tailoring my own needs into something I could actively deploy and continue to build upon. I'm confident I could apply my learned experience to a future client project someday.
+    images:
+      - src: "@portfolio/kokonekoart-results.png"
+        alt: The real test results for my hard work.
 
 finalText: "Well, you’re looking at it! ≽^•⩊•^≼"
 links:
