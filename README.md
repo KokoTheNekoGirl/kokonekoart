@@ -3,7 +3,7 @@
 A hand-built portfolio and commission site for digital artist and web developer Jess (KokoNekoArt). It replaces a WordPress theme with a fast, fully static Astro site: portfolio archive, slide-style project pages, a live commission price calculator, and contact and commission forms with PayPal checkout.
 
 **Live site:** https://kokoneko.art
-**Preview:** https://kokonekoart-rebuilt.vercel.app (when available)
+**Preview:** https://kokonekoart.vercel.app (when available)
 
 ## Features
 
