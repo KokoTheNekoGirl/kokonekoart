@@ -38,7 +38,7 @@ slides:
 links:
   figma:
     url: https://www.figma.com/design/zzbsCSnbBH0GKvmjbNpE0n/Media-Streamer?m=auto&t=sXndBhbg6coqyecD-6
-    type: prototype
+    type: design
 ---
 
 **Role:** UI Designer

@@ -33,7 +33,7 @@ slides:
         alt: "Desktop view of the redesign on the menu page"
 
 links:
-  github: https://github.com/KokoTheNekoGirl/kokonekoart-rebuilt/tree/prod/public/project/hoagie-boyz
+  github: https://github.com/KokoTheNekoGirl/kokonekoart/tree/prod/public/project/hoagie-boyz
   live: hoagie-boyz
   mockup: /project/Hoagie-Boyz-Mockups.pdf
 ---
