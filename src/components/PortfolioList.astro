@@ -10,6 +10,6 @@ const { pieces } = Astro.props;
 ---
 
 <div class="portfolio-posts">
-  {pieces.map((piece, i) => <PortfolioCard piece={piece} eager={i === 0} />)}
+  {pieces.map((piece, i) => <PortfolioCard piece={piece} eager={i === 0} position={i + 1} total={pieces.length} />)}
   {pieces.length === 0 && <p class="center">Nothing here yet. Check back soon!</p>}
 </div>

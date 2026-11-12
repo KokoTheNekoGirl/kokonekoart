@@ -9,16 +9,25 @@ import ButtonLink from './ButtonLink.astro';
 interface Props {
   piece: PortfolioEntry;
   eager?: boolean;
+  /** 1-based place in the list, and list length, sent with analytics events. */
+  position?: number;
+  total?: number;
 }
 
-const { piece, eager = false } = Astro.props;
+const { piece, eager = false, position, total } = Astro.props;
 const { title, description, categories, heroImage, heroAlt } = piece.data;
 const href = pieceHref(piece);
 const headingId = `piece-${piece.id}`;
 ---
 
 <div class="portfolio-summary">
-  <section class="portfolio-piece" aria-labelledby={headingId}>
+  <section
+    class="portfolio-piece"
+    aria-labelledby={headingId}
+    data-piece={piece.id}
+    data-position={position}
+    data-total={total}
+  >
     <div class="featured-image animate__animated animate__fadeInUp">
       <a href={href} tabindex="-1" aria-hidden="true">
         <Image

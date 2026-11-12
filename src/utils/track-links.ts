@@ -34,10 +34,58 @@ document.addEventListener('click', (e) => {
   if (path === '/commission-me') return track('commission-prices-click', { from });
   if (path === '/portfolio') return track('portfolio-click', { from });
   if (path.startsWith('/portfolio/project/')) return track('portfolio-category-click', { category: path.split('/').pop() ?? '', from });
-  if (path.startsWith('/portfolio/')) return track('portfolio-piece-click', { piece: path.split('/').pop() ?? '', from });
+  if (path.startsWith('/portfolio/')) {
+    // Which piece, from which page, and what they pressed (image / title / read-more / carousel).
+    const card = a.closest<HTMLElement>('[data-piece]');
+    const via = a.closest('.portfolio-preview-swiper') ? 'carousel' : a.closest('.featured-image') ? 'image' : a.closest('.mini-box') ? 'read-more' : 'link';
+    return track('portfolio-piece-click', {
+      piece: path.split('/').pop() ?? '',
+      from,
+      via,
+      ...(card?.dataset.position ? { position: Number(card.dataset.position) } : {}),
+    });
+  }
   if (path === '/about-me') return track('about-click', { from });
   if (path === '/contact') return track('contact-click', { from });
 });
+
+// Portfolio lists (/portfolio and the category pages): which entries people scroll to.
+// An entry counts as seen once it has been mostly on screen for a second, so flicking past
+// doesn't count. One event per entry per visit.
+const cards = document.querySelectorAll<HTMLElement>('.portfolio-piece[data-piece]');
+if (cards.length) {
+  const seenPieces = new Set<string>();
+  const timers = new Map<Element, ReturnType<typeof setTimeout>>();
+  const watch = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((en) => {
+        const card = en.target as HTMLElement;
+        const piece = card.dataset.piece ?? '';
+        if (!en.isIntersecting) {
+          clearTimeout(timers.get(card));
+          timers.delete(card);
+          return;
+        }
+        if (seenPieces.has(piece) || timers.has(card)) return;
+        timers.set(
+          card,
+          setTimeout(() => {
+            seenPieces.add(piece);
+            watch.unobserve(card);
+            timers.delete(card);
+            track('portfolio-piece-seen', {
+              piece,
+              position: Number(card.dataset.position ?? 0),
+              of: Number(card.dataset.total ?? 0),
+              from: here(),
+            });
+          }, 1000),
+        );
+      }),
+    { threshold: 0.6 },
+  );
+  cards.forEach((c) => watch.observe(c));
+}
 
 // Home page scroll depth: which sections actually get seen, once each.
 if (location.pathname === '/') {

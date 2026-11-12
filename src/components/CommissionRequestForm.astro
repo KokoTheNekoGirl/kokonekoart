@@ -340,7 +340,8 @@ const mb = REQUEST_LIMITS.totalBytes / 1_000_000;
         focusFirstError(form);
         return;
       }
-      track('commission-step-2');
+      const c = parsed.ok ? readChoice() : null;
+      track('commission-step-2', c ? { shot: c.shot, style: c.style, bg: c.bg, add_ons: c.addOns.length } : undefined);
       goTo(2);
     });
     $('[data-prev]').addEventListener('click', () => goTo(1));
@@ -493,10 +494,13 @@ const mb = REQUEST_LIMITS.totalBytes / 1_000_000;
       successBox.focus();
     }
 
+    let reportedAlready = false;
+
     async function setupPayPal() {
       if (payPalState !== 'idle') return;
       payPalState = 'busy';
       if (!paypalId) {
+        tracker.error('paypal');
         setStatus(status, 'Checkout is not available right now. Please email contact@kokoneko.art.', true);
         payPalState = 'idle';
         return;
@@ -506,6 +510,7 @@ const mb = REQUEST_LIMITS.totalBytes / 1_000_000;
           `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(paypalId)}&currency=${currency}&intent=capture&components=buttons`,
         );
       } catch {
+        tracker.error('paypal'); // usually an ad blocker or a bad connection
         setStatus(status, 'PayPal could not load. Please check your connection or try again later.', true);
         payPalState = 'idle';
         return;
@@ -522,7 +527,14 @@ const mb = REQUEST_LIMITS.totalBytes / 1_000_000;
           // The server prices the order itself; we only tell it WHAT was picked.
           createOrder: async () => {
             setStatus(status, 'Starting checkout…');
-            const token = await recaptchaToken(siteKey, 'commission');
+            let token: string;
+            try {
+              token = await recaptchaToken(siteKey, 'commission');
+            } catch (err) {
+              tracker.error('recaptcha');
+              reportedAlready = true;
+              throw err;
+            }
             const res = await fetch('/api/commission/order', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -530,6 +542,7 @@ const mb = REQUEST_LIMITS.totalBytes / 1_000_000;
             });
             const body = await res.json().catch(() => ({}));
             if (!res.ok || !body.id) {
+              reportedAlready = true; // PayPal will call onError for this throw; don't count it twice
               if (res.status === 403) tracker.blocked();
               else tracker.error('server');
               throw new Error(body.message ?? 'Could not start checkout.');
@@ -576,14 +589,18 @@ const mb = REQUEST_LIMITS.totalBytes / 1_000_000;
             track('commission-payment-cancelled');
             setStatus(status, 'Checkout cancelled. You have not been charged.');
           },
-          onError: (err: Error) =>
-            setStatus(status, err?.message || 'Something went wrong with PayPal. Please try again.', true),
+          onError: (err: Error) => {
+            if (!reportedAlready) tracker.error('paypal');
+            reportedAlready = false;
+            setStatus(status, err?.message || 'Something went wrong with PayPal. Please try again.', true);
+          },
         })
         .render('#paypal-buttons');
         payPalState = 'ready';
       } catch (err) {
         // PayPal rejects bad button settings here; without this the container just stays empty.
         console.error('PayPal buttons failed to render:', err);
+        tracker.error('paypal');
         payPalState = 'idle';
         setStatus(status, 'The PayPal button could not be shown. Please refresh, or email contact@kokoneko.art.', true);
       }

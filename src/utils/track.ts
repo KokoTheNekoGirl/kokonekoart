@@ -24,7 +24,7 @@ export interface FormTracker {
   /** The form went through. */
   success(): void;
   /** Something stopped a real submit: validation, the server, or the network. `fields` are field names only. */
-  error(kind: 'validation' | 'server' | 'network', fields?: string[]): void;
+  error(kind: 'validation' | 'server' | 'network' | 'paypal' | 'recaptcha', fields?: string[]): void;
   /** reCAPTCHA refused it. Treated as a bot: no error event, and leaving is not counted as abandonment. */
   blocked(): void;
 }
@@ -42,6 +42,8 @@ export function trackForm(form: HTMLFormElement, name: string, context?: () => D
   let bot = false;
   let reported = false;
   let lastField = '';
+  let startedAt = 0;
+  const sinceStart = () => (startedAt ? Math.round((Date.now() - startedAt) / 1000) : 0);
 
   const honeypot = form.elements.namedItem('website') as HTMLInputElement | null;
   const isBot = () => bot || (!!honeypot && honeypot.value !== '');
@@ -59,6 +61,7 @@ export function trackForm(form: HTMLFormElement, name: string, context?: () => D
     lastField = t.name; // a field NAME like "message", never its value
     if (!started && !isBot()) {
       started = true;
+      startedAt = Date.now();
       track('form-start', { form: name });
     }
   };
@@ -69,7 +72,7 @@ export function trackForm(form: HTMLFormElement, name: string, context?: () => D
   const leave = () => {
     if (!started || finished || reported || isBot()) return;
     reported = true;
-    track('form-abandon', { form: name, last_field: lastField, filled: filledCount(), ...context?.() });
+    track('form-abandon', { form: name, last_field: lastField, filled: filledCount(), seconds: sinceStart(), ...context?.() });
   };
   addEventListener('pagehide', leave);
   document.addEventListener('visibilitychange', () => document.visibilityState === 'hidden' && leave());
@@ -78,7 +81,7 @@ export function trackForm(form: HTMLFormElement, name: string, context?: () => D
     success() {
       if (isBot()) return;
       finished = true;
-      track('form-success', { form: name });
+      track('form-success', { form: name, seconds: sinceStart() });
     },
     error(kind, fields = []) {
       if (isBot()) return;
@@ -100,7 +103,7 @@ const bucket = (s: number) => (s < 10 ? 'under 10s' : s < 30 ? '10-30s' : s < 60
  *   seconds  active time (gaps between changes, each capped at 10s, so idling doesn't count)
  *   time     that time as a bucket, easy to read in the dashboard
  *   changes  how many options they changed
- *   left_via which button they used to leave, if any (request form / pay directly / ko-fi)
+ *   left_via which button they used to leave, if any (request form / pay directly / kofi)
  * plus whatever `snapshot()` returns (the final selection). Nothing is sent without a change.
  */
 export function trackPlay(root: HTMLElement, name: string, snapshot: () => Data) {

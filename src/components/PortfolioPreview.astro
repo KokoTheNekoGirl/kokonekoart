@@ -20,12 +20,13 @@ const featured = (await getPortfolio()).filter((p) => p.data.featured);
       >
         <ul class="swiper-wrapper">
           {featured.map((piece, i) => (
-            <li class="swiper-slide">
+            <li class="swiper-slide" data-piece={piece.id} data-position={i + 1}>
               <a href={pieceHref(piece)} aria-label={`View ${piece.data.title}`}>
                 <Image
                   class="art-img"
                   src={piece.data.heroImage ?? Placeholder}
                   alt={piece.data.heroAlt ?? `${piece.data.title} preview`}
+                  title={piece.data.title}
                   width={800}
                   height={600}
                   widths={[400, 800, 1200]}
@@ -48,6 +49,7 @@ const featured = (await getPortfolio()).filter((p) => p.data.featured);
   import 'swiper/css';
   import 'swiper/css/effect-fade';
   import { respectReducedMotion } from '@utils/swiper-motion';
+  import { track } from '@utils/track';
 
   const el = document.querySelector<HTMLElement>('.portfolio-preview-swiper');
   const count = Number(el?.dataset.count ?? 0);
@@ -67,6 +69,28 @@ const featured = (await getPortfolio()).filter((p) => p.data.featured);
     });
 
     respectReducedMotion(swiper);
+
+    // Which featured pieces actually get looked at: a slide counts once it has been on screen
+    // for 1.5s while the carousel is in view. One event per piece per visit.
+    const seen = new Set<string>();
+    let visible = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const consider = () => {
+      clearTimeout(timer);
+      const slide = swiper.slides[swiper.activeIndex] as HTMLElement | undefined;
+      const piece = slide?.dataset.piece;
+      if (!visible || !piece || seen.has(piece)) return;
+      timer = setTimeout(() => {
+        seen.add(piece);
+        track('portfolio-preview-seen', { piece, position: Number(slide?.dataset.position ?? 0), of: count });
+      }, 1500);
+    };
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      consider();
+    }, { threshold: 0.5 }).observe(el);
+    swiper.on('slideChangeTransitionEnd', consider);
+    document.addEventListener('visibilitychange', () => (document.visibilityState === 'hidden' ? clearTimeout(timer) : consider()));
   }
 </script>
 

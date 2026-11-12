@@ -27,7 +27,7 @@ const total = slides.length + 2;
 const label = (n: number) => `Slide ${n} of ${total}`;
 ---
 
-<section class="presentation info-viewport animate__animated animate__fadeIn" aria-roledescription="carousel" aria-label={`${title} presentation`}>
+<section class="presentation info-viewport animate__animated animate__fadeIn" aria-roledescription="carousel" aria-label={`${title} presentation`} data-piece={piece.id}>
   <div class="swiper presentation-swiper">
     <div class="swiper-wrapper">
       <!-- 1. Title slide -->
@@ -197,6 +197,7 @@ const label = (n: number) => `Slide ${n} of ${total}`;
   import { EffectFade, Keyboard, Navigation } from 'swiper/modules';
   import 'swiper/css';
   import 'swiper/css/effect-fade';
+  import { trackPresentation } from '@utils/track-presentation';
 
   const root = document.querySelector<HTMLElement>('.presentation');
   if (root) {
@@ -215,6 +216,14 @@ const label = (n: number) => `Slide ${n} of ${total}`;
       keyboard: { enabled: true, onlyInViewport: true },
       navigation: { prevEl: '.pres-prev', nextEl: '.pres-next', disabledClass: 'is-disabled' },
     });
+
+    const tracker = trackPresentation({
+      piece: root.dataset.piece ?? location.pathname.split('/').pop() ?? '',
+      total: slideEls.length,
+      start: location.hash === '#final-result' ? slideEls.length - 1 : 0,
+      enteredAtEnd: location.hash === '#final-result',
+    });
+    swiper.on('slideChange', () => tracker.slide(swiper.activeIndex));
 
     nav.hidden = false;
     root.classList.add('is-ready');
@@ -239,10 +248,12 @@ const label = (n: number) => `Slide ${n} of ${total}`;
 
     root.querySelector('[data-go-final]')?.addEventListener('click', (e) => {
       e.preventDefault();
+      tracker.skippedToEnd();
       goFinal();
     });
     root.querySelector('[data-go-start]')?.addEventListener('click', (e) => {
       e.preventDefault();
+      tracker.restarted();
       swiper.slideTo(0, reduced ? 0 : 600);
       slideEls[0].querySelector<HTMLElement>('h1')?.focus({ preventScroll: true });
     });
