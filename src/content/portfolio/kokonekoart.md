@@ -44,7 +44,7 @@ slides:
       
       This rebuild also gave me the opportunity to redesign certain pages that bugged me, such as my portfolio piece case studies and my TOS page. As well, I could push my accessibility knowledge even further and rebuild SEO on my own. I also updated to [swiper.js](https://swiperjs.com/) for more flexibility and better compatibility.
 
-      I discovered [Umami](https://umami.is) when I was researching alternative analytics trackers. I really valued the cookieless approach and more control over exactly what I wanted to be tracked. It allowed me to me more privacy concious for my users.
+      I discovered [Umami](https://umami.is) when I was researching alternative analytics trackers. I really valued the cookieless approach and more control over exactly what I wanted to be tracked. It allowed me to me more privacy conscious for my users.
 
     images:
       - src: "@portfolio/kokonekoart-portfolio.png"
