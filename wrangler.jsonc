@@ -7,5 +7,9 @@
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"
   },
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  "vars": {
+    "MAIL_FROM": "KokoNekoArt <hello@kokoneko.art>",
+    "PAYPAL_ENV": "live"
+  },
 }
