@@ -1,18 +1,11 @@
-# Rebuilds and redeploys the site twice a year so the pre-rendered age (Aug 13) and the footer
-# year (Jan 1) are correct. It just pings the Cloudflare Deploy Hook, which starts a normal build.
-#
-# Setup: Cloudflare -> Worker -> Settings -> Builds -> Deploy Hooks -> create a hook for the `main`
-# branch, copy its URL, then GitHub -> repo Settings -> Secrets and variables -> Actions ->
-# New repository secret named CF_DEPLOY_HOOK with that URL.
-#
-# GitHub only runs scheduled workflows from the default branch, so this file must be on `main`.
+# Rebuilds and redeploys the site twice a year so the pre-rendered age and the footer year are correct.
 name: Scheduled rebuild
 
 on:
   schedule:
-    - cron: "17 5 13 8 *" # Aug 13, 05:17 UTC = just after midnight in Winnipeg (UTC-5)
-    - cron: "17 5 1 1 *" #  Jan 1, 05:17 UTC
-  workflow_dispatch: {} #   "Run workflow" button, for testing
+    - cron: "15 5 13 8 *"
+    - cron: "15 5 1 1 *"
+  workflow_dispatch: {}
 
 permissions: {}
 
