@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '@layouts/Layout.astro';
+import { TosSection, ButtonLink } from '@components';
+import { CURRENCY, FAQS, SERVICES, priceParts } from '@data/services';
+import { personId, breadcrumbs } from '@utils/schema';
+
+const url = new URL('/services', Astro.site).href;
+
+const priceSpec = ({ min, max, per }: (typeof SERVICES)[number]['price']) => ({
+	'@type': per ? 'UnitPriceSpecification' : 'PriceSpecification',
+	priceCurrency: CURRENCY,
+	minPrice: min,
+	...(max ? { maxPrice: max } : {}),
+	...(per ? { unitCode: per === 'month' ? 'MON' : 'HUR' } : {}),
+});
+
+const service = {
+	'@context': 'https://schema.org',
+	'@type': 'Service',
+	name: 'Freelance web design and development',
+	serviceType: 'Web design and development',
+	description:
+		'Website maintenance, audits, redesigns, rebuilds and migrations, and custom web development for small businesses and individuals.',
+	provider: { '@id': personId(Astro.site) },
+	url,
+	hasOfferCatalog: {
+		'@type': 'OfferCatalog',
+		name: 'Web services',
+		itemListElement: SERVICES.map((s) => ({
+			'@type': 'Offer',
+			itemOffered: { '@type': 'Service', name: s.title, description: s.includes },
+			priceSpecification: priceSpec(s.price),
+		})),
+	},
+};
+
+const faqPage = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: FAQS.map((f) => ({
+		'@type': 'Question',
+		name: f.question,
+		acceptedAnswer: { '@type': 'Answer', text: f.answer },
+	})),
+};
+---
+
+<Layout
+	title="Web Design & Development Services"
+	description="Freelance website maintenance, audits, redesigns, migrations and custom web development for small businesses and individuals. Clear CAD pricing and hour estimates."
+	jsonLd={[service, faqPage, breadcrumbs(Astro.site, [{ name: 'Services', path: '/services' }])]}
+>
+	<section id="services-content">
+		<h1 class="animate__animated animate__fadeInUp" itemprop="name">Web Services</h1>
+		<p class="center services-intro">
+			I audit, build, design, or look after websites for small businesses and individuals. All estimates are priced in Canadian dollars ({CURRENCY}) and you’ll get a scoped estimate before any work begins. <strong>Please read my <a href="/services/tos">Web TOS</a> before freelancing me</strong>. Non-profits can <a href="/contact">contact me</a> for a reduced rate.
+		</p>
+
+		<div class="services-grid">
+			{
+				SERVICES.map((s, i) => (
+					<article class="service-card animate__animated animate__fadeInUp" aria-labelledby={`service-${s.id}`}>
+						<a class="service-link" href={`/contact?service=${s.id}`} aria-labelledby={`service-${s.id}`} aria-describedby={`includes-${s.id}`}>
+						<Image
+							src={s.image}
+							alt={s.imageAlt}
+							widths={[400, 720, 1024]}
+							sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 370px"
+							loading={i < 3 ? 'eager' : 'lazy'}
+							fetchpriority={i === 0 ? 'high' : undefined}
+						/>
+						<div class="service-body">
+							<h2 class="h3" id={`service-${s.id}`}>{s.title}</h2>
+							<p class="service-summary">{s.summary}
+								<i class="fa-solid fa-circle-info" aria-hidden="true" />
+								<span class="includes" id={`includes-${s.id}`}>
+									{s.includes}
+								</span>
+							</p>
+							<p class="service-hours">{s.hours}</p>
+							<p class="h2 service-price">
+								<span class="amount">{priceParts(s.price).amount}</span>
+								<span class="unit">{priceParts(s.price).unit}</span>
+							</p>
+						</div>
+						</a>
+					</article>
+				))
+			}
+		</div>
+
+		<div class="cta-buttons center animate__animated animate__fadeIn">
+			<ButtonLink class="primary" href="/contact" aria-label="Contact me to get started.">Let's get started!</ButtonLink>
+		</div>
+
+		<h2 class="center faq-title" id="faq">Frequently Asked Questions</h2>
+		<div class="accordion">
+			{FAQS.map((f) => <TosSection id={f.id} icon="circle-question" title={f.question} group="faq"><p>{f.answer}</p></TosSection>)}
+		</div>
+		<div class="cta-buttons faq-more center animate__animated animate__fadeIn">
+			<ButtonLink class="primary" href="/services/tos">More FAQ</ButtonLink>
+		</div>
+	</section>
+	<script>
+		const cards = document.querySelectorAll<HTMLElement>('.service-card');
+		const closeAll = () => cards.forEach((c) => c.classList.remove('info-open'));
+
+		document.addEventListener('click', (e) => {
+			const target = e.target as Element;
+			const icon = target.closest('.service-summary .fa-circle-info');
+			const details = target.closest('.service-summary .includes');
+			const card = (icon ?? details)?.closest<HTMLElement>('.service-card');
+			if (!card) return closeAll();
+			e.preventDefault();
+			const open = !!icon && !card.classList.contains('info-open');
+			closeAll();
+			card.classList.toggle('info-open', open);
+		});
+		document.addEventListener('keydown', (e) => e.key === 'Escape' && closeAll());
+	</script>
+</Layout>

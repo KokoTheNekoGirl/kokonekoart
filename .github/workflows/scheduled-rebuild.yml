@@ -1,0 +1,21 @@
+# Rebuilds and redeploys the site twice a year so the pre-rendered age and the footer year are correct.
+name: Scheduled rebuild
+
+on:
+  schedule:
+    - cron: "15 5 13 8 *"
+    - cron: "15 5 1 1 *"
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare build
+        env:
+          HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "CF_DEPLOY_HOOK secret is missing"; exit 1; fi
+          curl -fsS -X POST "$HOOK"

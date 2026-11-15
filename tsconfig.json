@@ -14,13 +14,14 @@
     "paths": {
       "@assets": ["./src/assets/index.ts"],
       "@assets/*": ["./src/assets/*"],
+      "@portfolio/*": ["./src/assets/portfolio/*"],
+      "@services": ["./src/assets/services/index.ts"],
       "@consts": ["./src/consts.ts"],
       "@components": ["./src/components/index.ts"],
       "@components/*": ["./src/components/*"],
       "@data/*": ["./src/data/*"],
       "@layouts/*": ["./src/layouts/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@portfolio/*": ["./src/assets/portfolio/*"]
+      "@utils/*": ["./src/utils/*"]
     }
   }
 }

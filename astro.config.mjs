@@ -2,10 +2,10 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, envField, fontProviders } from 'astro/config';
-import vercel from '@astrojs/vercel';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-    adapter: vercel(),
+    adapter: cloudflare({ imageService: 'compile' }),
     site: 'https://kokoneko.art',
     trailingSlash: 'never',
     integrations: [mdx(), sitemap()

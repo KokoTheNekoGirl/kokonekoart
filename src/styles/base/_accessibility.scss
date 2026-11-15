@@ -82,10 +82,32 @@
   clip-path: inset(50%) !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .accordion-item,
+    .accordion-item summary h2,
+    .accordion-chevron {
+        transition: none;
+    }
+    .service-card,
+    .service-summary .includes {
+        transition: none;
+    }
+    .presentation .pres-btn { transition: none; }
+    .custom-recaptcha-badge,
+    .custom-recaptcha-badge__content {
+        transition: none;
+    }
+}
+
 html.reduce-motion {
   .motion-control button::after {
     content: "Disable Reduced Motion";
   }
+
+  * {
+    transition: none;
+  }
+
   #star-container .star {
     animation: none !important;
   }
@@ -95,4 +117,5 @@ html.reduce-motion {
     opacity: 1;
     visibility: visible;
   }
+  
 }

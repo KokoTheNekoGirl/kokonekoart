@@ -1,6 +1,14 @@
 ---
 import { PUBLIC_RECAPTCHA_SITE_KEY } from 'astro:env/client';
-import { CONTACT_LIMITS, CONTACT_PLATFORMS, EMAIL_PLATFORM } from '@data/contact';
+import {
+  CONTACT_LIMITS,
+  CONTACT_PLATFORMS,
+  EMAIL_PLATFORM,
+  INQUIRY_OPTIONS,
+  SERVICE_FIELDS,
+  SERVICE_FIELD_DEFS,
+  SITE_PLATFORMS,
+} from '@data/contact';
 import ExternalLink from './ExternalLink.astro'
 import { Image } from 'astro:assets';
 import { ReCaptcha } from '@assets';
@@ -14,6 +22,7 @@ import { ReCaptcha } from '@assets';
   novalidate
   data-site-key={PUBLIC_RECAPTCHA_SITE_KEY}
   data-email-platform={EMAIL_PLATFORM}
+  data-service-fields={JSON.stringify(SERVICE_FIELDS)}
 >
   <noscript>
     <p class="form-notice">
@@ -21,9 +30,55 @@ import { ReCaptcha } from '@assets';
     </p>
   </noscript>
 
+  <div class="form-field" data-field="inquiry">
+    <label class="form-label" for="contact-inquiry">What can I help with?<span class="required"><span class="sr-only"> (required)</span></span>
+    </label>
+    <div class="select-wrap">
+      <select class="form-control" id="contact-inquiry" name="inquiry">
+        <option value="" selected>General message</option>
+        {INQUIRY_OPTIONS.map((o) => <option value={o.id}>{o.label}</option>)}
+      </select>
+    </div>
+    <p class="form-error" id="contact-inquiry-error" hidden></p>
+  </div>
+
+  {
+    Object.entries(SERVICE_FIELD_DEFS).map(([name, def]) => (
+      <div class="form-field" data-field={name} data-service-field hidden>
+        <label class="form-label" for={`contact-${name}`}>
+          {def.label}
+          <span class="required" data-required-mark hidden>
+            <span class="sr-only"> (required)</span>
+          </span>
+        </label>
+        {def.type === 'select' ? (
+          <div class="select-wrap">
+            <select class="form-control" id={`contact-${name}`} name={name} disabled>
+              <option value="" selected>Select a platform</option>
+              {SITE_PLATFORMS.map((p) => <option value={p}>{p}</option>)}
+            </select>
+          </div>
+        ) : (
+          <input
+            class="form-control"
+            id={`contact-${name}`}
+            name={name}
+            type="text"
+            autocomplete="off"
+            maxlength={def.max}
+            aria-describedby={def.hint ? `contact-${name}-hint` : undefined}
+            disabled
+          />
+        )}
+        {def.hint && <p class="form-hint" id={`contact-${name}-hint`}>{def.hint}</p>}
+        <p class="form-error" id={`contact-${name}-error`} hidden />
+      </div>
+    ))
+  }
+
   <div class="form-field" data-field="platform">
     <label class="form-label" for="contact-platform">
-      Platform<span class="required"><span class="sr-only"> (required)</span></span>
+      Contact Method<span class="required"><span class="sr-only"> (required)</span></span>
     </label>
     <div class="select-wrap">
       <select
@@ -33,7 +88,7 @@ import { ReCaptcha } from '@assets';
         required
         aria-describedby="contact-platform-hint"
       >
-        <option value="" selected disabled>Select a Platform</option>
+        <option value="" selected disabled>Select a platform</option>
         {CONTACT_PLATFORMS.map((p) => <option value={p.id}>{p.label}</option>)}
       </select>
     </div>
@@ -125,7 +180,7 @@ import { ReCaptcha } from '@assets';
     setStatus,
     showError,
   } from '@utils/form-client';
-  import { trackForm } from '@utils/track';
+  import { track, trackForm } from '@utils/track';
 
   const form = document.querySelector<HTMLFormElement>('#contact-form');
 
@@ -144,7 +199,28 @@ import { ReCaptcha } from '@assets';
       CONTACT_LIMITS.message,
     );
     preloadOnFirstUse(form, siteKey);
-    const tracker = trackForm(form, 'contact');
+    const inquiry = form.elements.namedItem('inquiry') as HTMLSelectElement;
+    const serviceFields = JSON.parse(form.dataset.serviceFields ?? '{}') as Record<string, Record<string, 'required' | 'optional'>>;
+    const tracker = trackForm(form, 'contact', () => ({ service: inquiry.value || 'general' }));
+
+    // A service inquiry shows only the extra questions that service needs; the required ones are enforced.
+    function syncInquiry() {
+      const wanted = serviceFields[inquiry.value] ?? {};
+      form.querySelectorAll<HTMLElement>('[data-service-field]').forEach((wrap) => {
+        const need = wanted[wrap.dataset.field!];
+        const control = wrap.querySelector<HTMLInputElement | HTMLSelectElement>('input, select')!;
+        wrap.hidden = !need;
+        control.disabled = !need;
+        control.required = need === 'required';
+        wrap.querySelector<HTMLElement>('[data-required-mark]')!.hidden = need !== 'required';
+      });
+    }
+    inquiry.addEventListener('change', syncInquiry);
+
+    // Arriving from a service card on /services (/contact?service=audit) picks that service for them.
+    const asked = new URLSearchParams(location.search).get('service');
+    if (asked && [...inquiry.options].some((o) => o.value === asked)) inquiry.value = asked;
+    syncInquiry();
 
     // Username is for every platform except Email; Email is only for Email.
     function syncPlatform() {
@@ -194,6 +270,7 @@ import { ReCaptcha } from '@assets';
 
         if (res.ok && body.ok) {
           tracker.success();
+          if (inquiry.value) track('service-inquiry-sent', { service: inquiry.value });
           form.hidden = true;
           success.hidden = false;
           success.focus();

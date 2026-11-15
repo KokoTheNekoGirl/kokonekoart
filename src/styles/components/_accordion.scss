@@ -24,7 +24,6 @@
         justify-content: space-between;
         gap: 1em;
         padding: 0.75em 1.25em;
-        cursor: pointer;
         list-style: none;
 
         &::-webkit-details-marker {
@@ -47,8 +46,6 @@
             padding: 0;
             text-align: left;
             transition: color 0.3s;
-
-            // The global `h2 *` rule gives every descendant a bottom margin; reset it here.
             > * {
                 margin: 0;
             }
@@ -67,13 +64,5 @@
 
     .accordion-body {
         padding: 0 1.25em 1em;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .accordion-item,
-    .accordion-item summary h2,
-    .accordion-chevron {
-        transition: none;
     }
 }

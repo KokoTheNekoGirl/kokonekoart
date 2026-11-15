@@ -15,4 +15,5 @@ export { default as PortfolioList} from './PortfolioList.astro';
 export { default as SampleArtGallery } from './SampleArtGallery.astro';
 export { default as SocialLinks } from './SocialLinks.astro';
 export { default as Stars } from './StarContainer.astro';
+export { default as TermsPage } from './TermsPage.astro';
 export { default as TosSection } from './TosSection.astro';

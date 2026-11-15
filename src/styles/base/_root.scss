@@ -179,3 +179,7 @@ a[rel~="external"]:not(.icon,.btn,.img-link),a[rel~="noopener"]:not(.icon,.btn,.
 .fa-leo {
   color: rgb(var(--primary));
 }
+
+.fa-circle-info,.accordion-item {
+  cursor: help;
+}

@@ -10,7 +10,7 @@ featured: true
 slides:
   - title: Context
     content: |
-      Regpoints is a point system reserved for the Ponytown [Regiment community](https://ponytown.fandom.com/wiki/Category:Regiments). It was created in 2020 by Nemm. Unfortunately, the project was shut down in 2023 due to financial issues.
+      Regpoints is a point system reserved for the PonyTown [Regiment Community](https://ponytown.fandom.com/wiki/Category:Regiments). It was created in 2020 by Nemm. Unfortunately, the project was shut down in 2023 due to financial issues.
 
       In 2025, Ponytown Regiment Services contacted Nemm, with the assistance of Project: Colorfes, to retrieve the RegPoints files and get them operational again.
 
