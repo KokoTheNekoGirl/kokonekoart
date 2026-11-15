@@ -1,16 +1,30 @@
-import { CONTACT_LIMITS, CONTACT_PLATFORMS, EMAIL_PLATFORM, type PlatformId } from '@data/contact';
+import {
+  CONTACT_LIMITS,
+  CONTACT_PLATFORMS,
+  EMAIL_PLATFORM,
+  INQUIRY_OPTIONS,
+  SERVICE_FIELDS,
+  SERVICE_FIELD_DEFS,
+  SITE_PLATFORMS,
+  type InquiryId,
+  type PlatformId,
+  type ServiceFieldId,
+} from '../data/contact';
 import { isEmail, multiLine, oneLine, type FieldErrors } from './validation';
 
 export interface ContactValues {
   platform: PlatformId;
   name: string;
-  /** Empty when the platform is Email. */
   username: string;
-  /** Only set when the platform is Email. */
   email: string;
   subject: string;
   message: string;
+  inquiry: InquiryId | '';
+  service: Record<ServiceFieldId, string>;
 }
+
+// A domain with an optional https:// in front and an optional path: kokoneko.art, https://shop.example.ca/store
+const SITE_ADDRESS = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
 
 export type ContactResult = { ok: true; values: ContactValues } | { ok: false; errors: FieldErrors };
 
@@ -22,6 +36,28 @@ export function validateContact(raw: Record<string, unknown>): ContactResult {
   const email = oneLine(raw.email);
   const subject = oneLine(raw.subject);
   const message = multiLine(raw.message);
+
+  const inquiry = INQUIRY_OPTIONS.find((o) => o.id === raw.inquiry)?.id ?? '';
+  const wanted = inquiry ? SERVICE_FIELDS[inquiry] : {};
+  const service: Record<ServiceFieldId, string> = { site_url: '', site_platform: '', new_platform: '', timeline: '' };
+  for (const [field, need] of Object.entries(wanted) as [ServiceFieldId, 'required' | 'optional'][]) {
+    const def = SERVICE_FIELD_DEFS[field];
+    const value = oneLine(raw[field]);
+    if (!value) {
+      if (need === 'required') errors[field] = def.missing;
+      continue;
+    }
+    if (def.type === 'select') {
+      if (!(SITE_PLATFORMS as readonly string[]).includes(value)) errors[field] = 'Please choose one of the options.';
+      else service[field] = value;
+    } else if (value.length > (def.max ?? 200)) {
+      errors[field] = `Keep this under ${def.max} characters.`;
+    } else if (field === 'site_url' && !SITE_ADDRESS.test(value)) {
+      errors[field] = 'Please enter a website address, like kokoneko.art.';
+    } else {
+      service[field] = value;
+    }
+  }
 
   if (!platform) errors.platform = 'You must select a platform for me to reach you on.';
   if (!name) errors.name = 'I need your name.';
@@ -53,6 +89,8 @@ export function validateContact(raw: Record<string, unknown>): ContactResult {
       email: isEmailPlatform ? email : '',
       subject,
       message,
+      inquiry,
+      service,
     },
   };
 }

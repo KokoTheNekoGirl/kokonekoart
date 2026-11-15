@@ -3,7 +3,6 @@
 A hand-built portfolio and commission site for digital artist and web developer Jess (KokoNekoArt). It replaces a WordPress theme with a fast, fully static Astro site: portfolio archive, slide-style project pages, a live commission price calculator, and contact and commission forms with PayPal checkout.
 
 **Live site:** https://kokoneko.art
-**Preview:** https://kokonekoart.vercel.app (when available)
 
 ## Features
 
@@ -23,13 +22,13 @@ A hand-built portfolio and commission site for digital artist and web developer 
 | Area | Tools |
 | --- | --- |
 | Framework | Astro 7 (static output, server routes for the forms) |
-| Hosting | Vercel (`@astrojs/vercel`), clean URLs, no trailing slashes |
+| Hosting | Cloudflare (`@astrojs/cloudflare`), clean URLs, no trailing slashes |
 | Content | Astro content collections, Markdown and MDX |
 | Styling | Modular SCSS partials, CSS custom properties |
 | Analytics | Umami (cookieless, anonymous)
 | Carousels | Swiper |
 | Fonts and icons | Astro Fonts API (local provider), Font Awesome |
-| Forms | Vercel serverless API routes, Google reCAPTCHA v3, Resend, PayPal REST API |
+| Forms | Cloudflare serverless API routes, Google reCAPTCHA v3, Resend, PayPal REST API |
 | Images | Astro `<Image>` with Sharp |
 | Language | TypeScript |
 
@@ -53,7 +52,7 @@ The site runs at http://localhost:4321.
 
 ### Environment variables
 
-Set these in `.env` locally and under Project Settings, Environment Variables in Vercel. `PUBLIC_` values are baked in at build time, so redeploy after changing them.
+Set these in `.env` locally and under Project Settings, Environment Variables in Cloudflare. `PUBLIC_` values are baked in at build time, so redeploy after changing them.
 
 | Variable | Purpose |
 | --- | --- |
@@ -73,7 +72,7 @@ Never commit `.env`.
 | Command | Action |
 | --- | --- |
 | `npm run dev` | Start the dev server |
-| `npm run build` | Build to `.vercel/output` |
+| `npm run build` | Build to `.disc/` |
 | `npm run preview` | Preview the production build |
 | `npm run fa:subset` | Rebuild the trimmed Font Awesome stylesheet after adding or removing an icon |
 
@@ -90,7 +89,7 @@ src/
   styles/       SCSS partials: base, components, layout
   utils/        Validation, form helpers, server-only helpers
 scripts/        fa-subset.mjs
-vercel.json     Headers (CSP, HSTS) and clean URLs
+wrangler.json   Wrangler config, sets up clean URLs
 ```
 
 Import aliases (`@assets`, `@components`, `@data/*`, `@layouts/*`, `@utils/*`, `@consts`) are defined in `tsconfig.json`.
@@ -100,7 +99,7 @@ Import aliases (`@assets`, `@components`, `@data/*`, `@layouts/*`, `@utils/*`, `
 - Prices are computed on the server, and the PayPal order is verified again before capture.
 - Uploaded images are checked by file signature and capped at 4 MB in total.
 - Secrets are server-side only; only the reCAPTCHA site key and PayPal client ID reach the browser.
-- A Content-Security-Policy runs from `vercel.json`.
+- A Content-Security-Policy runs from `./public/_headers`.
 
 ## Credits and licences
 
@@ -108,4 +107,4 @@ Import aliases (`@assets`, `@components`, `@data/*`, `@layouts/*`, `@utils/*`, `
 - Fonts: Spinnaker and Fuzzy Bubbles (SIL Open Font Licence). Starborn by Hawtpixel, used under a licence that does not allow redistribution, so the font files are not in this repository.
 - Icons: Font Awesome. The Pro files are used under a commercial licence and are not redistributable, so they are not in this repository.
 - Libraries: Astro, Swiper, accessible-astro-components, animate.css, Sharp.
-- Third-party services: Umami (anonymous analytics), Google reCAPTCHA v3 (spam protection), PayPal (payments), Resend (email delivery), Vercel (hosting).
+- Third-party services: Umami (anonymous analytics), Google reCAPTCHA v3 (spam protection), PayPal (payments), Resend (email delivery), cloudFlare (proxy and hosting).

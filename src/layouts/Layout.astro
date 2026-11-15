@@ -78,6 +78,7 @@ const today = new Date();
                 <ul class="menu" id="menu-list">
                     <li class="menu-item"><HeaderLink href="/about-me">About</HeaderLink></li>
                     <li class="menu-item"><HeaderLink href="/commission-me">Commissions</HeaderLink></li>
+                    <li class="menu-item"><HeaderLink href="/services">Services</HeaderLink></li>
                     <li class="menu-item"><HeaderLink href="/portfolio">Portfolio</HeaderLink></li>
                     <li class="menu-item"><HeaderLink href="/contact">Contact</HeaderLink></li>
                 </ul>
@@ -132,7 +133,7 @@ const today = new Date();
             (entries) => entries.forEach((e) => {
             if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
             }),
-            { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
+            { threshold: 0, rootMargin: '0px 0px 5% 0px' },
         );
         els.forEach((el) => io.observe(el));
         }

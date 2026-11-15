@@ -12,7 +12,7 @@ slides:
     content: |
       Initially, I planned to have two separated sites dedicated to my [commission based digital art](/portfolio/kokonekoart-prototype) and my web portfolio site open to freelancing offers. When looking at the costs to maintain and host, I decided to merge both into one site. I was advised against this by my professors in college, but unfortunately I did not have the resources available to me at the time to keep the two sides of myself separated. I built that initial site in a [custom WordPress theme](https://github.com/KokoTheNekoGirl/kokonekoart-theme), since it was what I could deploy the quickest with what I knew. 
 
-      Later on, I decided to lower hosting costs by restructuring my entire portfolio site into a different framework where I don't pay for hosting. I ultimately decided on Astro, with some TypeScript, to offer a balance of dynamic, reusable components with static content. This instance is now live via Vercel deployment and is version controlled on my GitHub. As of right now, I only repay my annual domain renewal.
+      Later on, I decided to lower hosting costs by restructuring my entire portfolio site into a different framework where I don't pay for hosting. I ultimately decided on Astro, with some TypeScript, to offer a balance of dynamic, reusable components with static content. This instance is now live via CI/CD Cloudflare deployment and is version controlled on my GitHub. As of right now, I only repay my annual domain renewal.
     images:
       - src: "@portfolio/kokonekoart-redesign.png"
         alt: The before and after of the site's voice. Before, it was more paper/crafty stop motion animation, whereas now it's dreamy, soft, pastel aesthetic.
@@ -44,7 +44,7 @@ slides:
       
       This rebuild also gave me the opportunity to redesign certain pages that bugged me, such as my portfolio piece case studies and my TOS page. As well, I could push my accessibility knowledge even further and rebuild SEO on my own. I also updated to [swiper.js](https://swiperjs.com/) for more flexibility and better compatibility.
 
-      I discovered [Umami](https://umami.is) when I was researching alternative analytics trackers. I really valued the cookieless approach and more control over exactly what I wanted to be tracked. It allowed me to me more privacy conscious for my users.
+      I discovered [Umami](https://umami.is) when I was researching alternative analytics trackers. I really valued the cookieless approach and more control over exactly what I wanted to be tracked. It allowed me to me more privacy conscious for my users. I initially deployed on [Vercel](https://vercel.com), but I realized that the hobbiest plan doesn't cover this site. I've since moved to Cloudflare and discovered CI/CD pipelines.
 
     images:
       - src: "@portfolio/kokonekoart-portfolio.png"
@@ -80,6 +80,6 @@ finalNote: This current site is live and version controlled, receiving continuou
 
 **Roles:** Artist, Designer, & Developer
 
-**Current Stack:** Astro, TypeScript, SCSS, Markdown/MDX, Barrel Files, Swiper.js, accessible-astro-components, Vercel & Serverless Functions, PayPal REST API, Google reCAPTCHA v3, Resend (Email API), Umami Analytics, WordPress Migration
+**Current Stack:** Astro, TypeScript, SCSS, Markdown/MDX, Barrel Files, Swiper.js, accessible-astro-components, Cloudflare CI/CD deployment, Serverless Functions, PayPal REST API, Google reCAPTCHA v3, Resend (Email API), Umami Analytics, WordPress and Vercel Migration
 
 **Features:** Semantic HTML, Keyboard Navigation, prefers-reduced-motion Support, Screen Reader Announcements and a no-JavaScript Fallback, Image and SEO Optimization, Typed Content, Single Source Files, Structured Data, Static Output, AJAX Contact & Commission Forms, Server-side Price Validation, Bot Protection (reCAPTCHA & Honeypot), Privacy-first Cookieless Analytics, Font & CSS Optimization

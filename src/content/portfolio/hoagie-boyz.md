@@ -35,7 +35,7 @@ slides:
 links:
   github: https://github.com/KokoTheNekoGirl/kokonekoart/tree/prod/public/project/hoagie-boyz
   live: hoagie-boyz
-  mockup: /project/Hoagie-Boyz-Mockups.pdf
+  mockup: https://files.kokoneko.art/mockups/Hoagie-Boyz.pdf
 ---
 
 **Roles:** Designer & Developer

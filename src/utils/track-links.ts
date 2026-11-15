@@ -46,7 +46,10 @@ document.addEventListener('click', (e) => {
     });
   }
   if (path === '/about-me') return track('about-click', { from });
-  if (path === '/contact') return track('contact-click', { from });
+  if (path === '/contact') {
+      const service = url.searchParams.get('service');
+      return service ? track('service-card-click', { service, from }) : track('contact-click', { from });
+    }
 });
 
 // Portfolio lists (/portfolio and the category pages): which entries people scroll to.

@@ -1,20 +1,27 @@
-import { CONTACT_PLATFORMS } from '@data/contact';
+import { CONTACT_PLATFORMS, INQUIRY_OPTIONS, SERVICE_FIELD_DEFS, type ServiceFieldId } from '@data/contact';
 import { money } from '../commission-form';
 import type { ContactValues } from '../contact-form';
 import { escapeHtml, plainRows, rows, wrap } from './mail';
 
 export function contactEmail(v: ContactValues) {
   const platform = CONTACT_PLATFORMS.find((p) => p.id === v.platform)!.label;
+  const inquiry = v.inquiry ? INQUIRY_OPTIONS.find((o) => o.id === v.inquiry)?.label : undefined;
+  const serviceRows = (Object.keys(SERVICE_FIELD_DEFS) as ServiceFieldId[])
+    .filter((f) => v.service[f])
+    .map((f): [string, string] => [SERVICE_FIELD_DEFS[f].label, v.service[f]]);
   const items: [string, string][] = [
     ['Platform', platform],
     ['Name', v.name],
     [v.email ? 'Email' : 'Username', v.email || v.username],
+    ...(inquiry ? ([['Service', inquiry], ...serviceRows] as [string, string][]) : []),
     ['Subject', v.subject || '(none)'],
     ['Message', v.message],
   ];
   return {
-    subject: `NEW Connection Request${v.subject ? `: ${v.subject}` : ''}`,
-    html: wrap(`<h2 style="margin:0 0 12px">New connection request</h2>${rows(items)}`),
+    subject: inquiry
+      ? `NEW Service Inquiry: ${inquiry}${v.subject ? ` (${v.subject})` : ''}`
+      : `NEW Connection Request${v.subject ? `: ${v.subject}` : ''}`,
+    html: wrap(`<h2 style="margin:0 0 12px">New ${inquiry ? 'service inquiry' : 'connection request'}</h2>${rows(items)}`),
     text: plainRows(items),
   };
 }
@@ -29,7 +36,6 @@ interface Order {
   details: string;
   payerEmail?: string;
   files: string[];
-  /** Set when the amount PayPal captured differs from the price recomputed from the form. */
   warning?: string;
 }
 

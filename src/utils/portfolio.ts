@@ -33,7 +33,6 @@ export async function getUsedCategories(): Promise<CategoryId[]> {
 export interface FinalLink {
   href: string;
   label: string;
-  /** Font Awesome classes */
   icon: string;
 }
 

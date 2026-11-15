@@ -1,0 +1,50 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getEntry, render } from 'astro:content';
+import { formatDate, isoDate, lastModified } from '@utils/last-modified';
+import { breadcrumbs } from '@utils/schema';
+
+interface Props {
+	entryId: 'art-tos' | 'web-tos';
+	trail: { name: string; path: string }[];
+}
+
+const TERMS = {
+	Art: { href: '/commission-me/tos', label: 'Art TOS' },
+	Web: { href: '/services/tos', label: 'Web TOS' },
+} as const;
+
+const { entryId, trail } = Astro.props;
+const entry = (await getEntry('legal', entryId))!;
+const { Content } = await render(entry);
+
+const kind = entry.data.kind!;
+const other = kind === 'Art' ? 'Web' : 'Art';
+
+const pinned = entry.data.updated;
+const updated = pinned ?? lastModified(entry.filePath!);
+const zone = pinned ? 'UTC' : undefined;
+
+const jsonLd = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'WebPage',
+		name: `${kind} ${entry.data.title}`,
+		description: entry.data.description,
+		dateModified: isoDate(updated, zone),
+	},
+	breadcrumbs(Astro.site, trail),
+];
+---
+
+<Layout title={`${kind} ${entry.data.title}`} description={entry.data.description} jsonLd={jsonLd}>
+	<section id="boxed-content">
+		<span class="tos-kind h3 center animate__animated animate__fadeInUp">{kind}</span>
+		<h1 class="animate__animated animate__fadeInUp">{entry.data.title}</h1>
+		<p class="center">Last Updated: <time datetime={isoDate(updated, zone)}>{formatDate(updated, zone)}</time></p>
+		<p class="center">Looking for the {other.toLowerCase()} terms? <a href={TERMS[other].href}>{TERMS[other].label}</a>.</p>
+		<div class="accordion">
+			<Content />
+		</div>
+	</section>
+</Layout>
