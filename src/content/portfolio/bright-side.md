@@ -12,15 +12,15 @@ slides:
     content: |
       For a while, I had grown tired of the doom scrolling, the constant anxiety about the future, and the promotion of negativity both in the online space and in the real world. Cities don't feel like communities, towns don't feel like villages, policies aren't improving, and the globe is changing faster than we can prepare for. I don't want to see the world as doomed, I want to prove good still exists. That's the spark as to why I decided to create Bright✦Side. I want to make a difference, no matter how small.
 
-      I wanted the site itself to feel alive, so I tied it to something that changes slowly and predictably: the moon. I love connecting intentions and energy to the moon, attuning to her energy to daily life released tension and anxiety I had with the world around me. I wanted to bring that same feeling and intention with the core of this site. From the design, to the sounds, to the voice, everything about Bright✦Side inspires hope, optimism, positivity, and gratitude. The voices behind Bright✦Side were hand picked by me, and stories tailored to the messages that I think need to be spread the most.
+      I wanted the site itself to feel alive, so I tied it to something that changes slowly and predictably: the moon. I love connecting intentions and energy to the moon, attuning my daily life to her energy released the tension and anxiety I felt about the world around me. I wanted to bring that same feeling and intention with the core of this site. From the design, to the sounds, to the voice, everything about Bright✦Side inspires hope, optimism, positivity, and gratitude. The voices behind Bright✦Side were hand-picked by me, and stories tailored to the messages that I think need to be spread the most.
     images:
       - src: "@portfolio/bright-side-inspo.png"
         alt: "The overall moodboard I had prior to starting. Focusing on real, human art, florals, and the moon."
   - title: Process✦
     content: |
-      I started in Figma, as that's what I knew best. I wanted to get the general look and feel down before stepping into the code, so I had something to referance later on. I knew early on I wanted to use Tailwind, so I tried to find the Tailwind CSS classes that I would need and designed with them in mind. I also wanted to change up the icon set I typically used, and went with[Phosphor Icons](https://phosphoricons.com/). I really liked the options for outline and duotone specifically. I created Figma components for the repeatable interactive elements, designed logos and moon vectors, and I got far enough along that I knew the visual direction I was wanting to go.
+      I started in Figma, as that's what I knew best. I wanted to get the general look and feel down before stepping into the code, so I had something to reference later on. I knew early on I wanted to use Tailwind, so I tried to find the Tailwind CSS classes that I would need and designed with them in mind. I also wanted to change up the icon set I typically used, and went with [Phosphor Icons](https://phosphoricons.com/). I really liked the options for outline and duotone specifically. I created Figma components for the repeatable interactive elements, designed logos and moon vectors, and I got far enough along that I knew the visual direction I was wanting to go.
 
-      As for what I wanted to build it with, I really wanted to immerse myself in React and Next.js as well as Tailwind CSS to really understand the framework. It was challenging working in a differnet framework, but I really enjoyed it. I especially liked the flexibility Tailwind offered. I could mix global theme styles with element specific ones. It saved me a lot of custom CSS.
+      As for what I wanted to build it with, I really wanted to immerse myself in React and Next.js as well as Tailwind CSS to really understand the framework. It was challenging working in a different framework, but I really enjoyed it. I especially liked the flexibility Tailwind offered. I could mix global theme styles with element specific ones. It saved me a lot of custom CSS.
     images:
       - src: "@portfolio/bright-side-ui.png"
         alt: "The designed UI guide I referenced throughout development"
@@ -28,7 +28,7 @@ slides:
         alt: "The designed repeatable components I referenced throughout development"
   - title: Revolving Around The Moon✦
     content: |
-      The hero message changes with the lunar cycle, as she moves around us, we follow her and resonate in her light. The site moves through **growth** (waxing moon), **celebrate** (the full moon), **appreciation** (waning moon), and **reflection** (new moon), with **rejoice** reserved for a Blue Moon and **deeply reflect** arriving with Lunar Eclipses. The nebula background of the hero is pure css, which I'm pretty proud of.
+      The hero message changes with the lunar cycle, as she moves around us, we follow her and resonate in her light. The site moves through **growth** (waxing moon), **celebration** (the full moon), **appreciation** (waning moon), and **reflection** (new moon), with **rejoice** reserved for a Blue Moon and **deeply reflect** arriving with Lunar Eclipses. The nebula background of the hero is pure css, which I'm pretty proud of.
       
       Each phase has a featured feed attached to it, sharing articles and videos aligning with the focus of that phase. While waxing to waning moons feature positive, feel good stories, reflection can feature more somber, serious stories that still need to be addressed. The whole idea is that darkness can't exist without light, and light always returns after darkness. Setbacks happen, and it's important to acknowledge both, though at expected predictable times.
     images:
@@ -43,20 +43,21 @@ slides:
 
   - title: Curating the Feed✦
     content: |
-      Bright✦Side pulls from good-news RSS feeds and embedded YouTube channels, including Sam Bentley, Planet Wild and The Ocean Cleanup. Every post gets one or two categories, the home page shows the latest ten, and a paginated news archive holds the rest. The categories and tone are added based on the keywords found in the article's title and content. It's not perfect, so a manual overide exists if needed. In the end, I decided to only link to the external articles, as I wanted to be as careful as possible to avoid copyright or republishing issues.
+      Bright✦Side pulls from good-news RSS feeds and embedded YouTube channels, including Sam Bentley, Planet Wild and The Ocean Cleanup. Every post gets one or two categories, the home page features up to ten stories matching the moon’s phase, and a paginated news archive holds the rest. The categories and tone are added based on the keywords found in the article's title and content. It's not perfect, so a manual override exists if needed. In the end, I decided to only link to the external articles, as I wanted to be as careful as possible to avoid copyright or republishing issues.
 
       The editorial rules are part of the design:
       - Somber stories only appear at the new moon or during an eclipse, and sensitive ones are tagged up front so no one is caught off guard.
       - Everything else stays purely good news. No AI related stories, even the good ones.
-      - Partisan politics stays out, unless a story is positive action that doesn't add anxiety.
+      - Partisan politics stays out entirely, from every side. Only positive stoies about progress chosen by me get featured.
+      - Every source’s licence and credit rules live in code. Publishers' required credit lines, YES! Magazine’s 48-hour hold, and the Attribution page fills automatically.
     images:
       - src: "@portfolio/bright-side-news.png"
         alt: "Desktop layout of the good news page with all the categories"
   - title: Additional & Stretch Goals✦
     content: |
-      During production, I had an idea to create a small player that adds chill lofi while you're visiting. Though, I needed to make sure it was lisensed to use and I did not want AI music to be added. The current playlists are fetched through the Jamendo API, before 2022, and the playlists also fetch songs matching the current site tone. Each moon event gets its own playlist, so the sound matches the mood of the sky.
+      During production, I had an idea to create a small player that adds chill lofi while you're visiting. Though, I needed to make sure it was licensed to use and I did not want AI music to be added. The playlists are fetched through the Jamendo API, limited to instrumental tracks released before 2022, and matched to the current lunar tone. Each moon event gets its own playlist, so the sound matches the mood of the sky. The playlist shuffles for each listener and remembers where you left off.
 
-      What's next for Bright✦Side? Well, I intend to add more atmospheric sound preferances (like ocean waves, rain, crickets, etc.). As well, a toggle for reduced motion, a light theme following the sun instead. The solar theme would offer a dawn, midday, afternoon, and twilight theme, applied based on the client's timezone. Solstices, eclipses, and equinoxes would be special themes. The tones would still be aligned with the moon, but the hero and site theme would be the one changing.
+      What's next for Bright✦Side? Well, I intend to add more atmospheric sound preferences (like ocean waves, rain, crickets, etc.). As well, an on-site reduced motion toggle (the site already follows the system setting), and a higher-contrast light theme following the sun instead. The solar theme would offer a dawn, midday, afternoon, and twilight theme, applied based on the client's timezone. Solstices, solar eclipses, and equinoxes would be special themes. The tones would still be aligned with the moon, but the hero and site theme would be the one changing.
     # images:
     #   - src: "@portfolio/bright-side-placeholder.png"
     #     alt: "what do i put here?-"
@@ -73,4 +74,4 @@ links:
 
 **Stack:** Figma, Next.js 16, React 19, TypeScript, Tailwind CSS v4, astronomy-engine, rss-parser, Jamendo API, Phosphor Icons, Vercel
 
-**Coming Soon:** Umami analytics/privacy, footer rebuild, solar light theme switcher
+**Coming Soon:** Umami analytics/privacy, footer rebuild, solar high-contrast light theme switcher, atmospheric sound preferences
