@@ -23,8 +23,8 @@ if (isExternal) relTokens.add('noopener');
 const relValue = relTokens.size ? [...relTokens].join(' ') : undefined;
 ---
 
-<a href={href} role="button" class:list={['btn', classes]} {...props} rel={relValue} aria-describedby={isExternal ? 'external-hint' : undefined} target={isExternal ? '_blank' : undefined} itemprop="url">
+<a href={href} role="button" class:list={['btn', classes]} {...props} rel={relValue} aria-describedby={isExternal ? 'external-hint' : undefined} target={isExternal ? '_blank' : undefined}>
     {isPrimary && <span class="whiskers-left"></span>}
-    <span class="btn-text" itemprop="name"><slot /></span>
+    <span class="btn-text"><slot /></span>
     {isPrimary && <span class="whiskers-right"></span>}
 </a>

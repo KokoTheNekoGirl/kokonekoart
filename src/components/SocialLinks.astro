@@ -22,6 +22,7 @@ const secondaryLinks = socialLinks.filter(
 
 <div
   class='icon-group animate__animated animate__fadeIn center'
+  role="group"
   aria-label="Main social profiles"
 >
   {primaryLinks.map(link => (
@@ -45,6 +46,7 @@ const secondaryLinks = socialLinks.filter(
 {showSecondary && (
   <div
     class='icon-group animate__animated animate__fadeIn center'
+    role="group"
     aria-label="Additional social profiles"
   >
     {secondaryLinks.map(link => (

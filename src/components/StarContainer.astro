@@ -18,7 +18,7 @@ import { ExternalLink } from '@components';
         </div>
     </div>
 </div>
-<div class="custom-recaptcha-badge" aria-label="Site protection">
+<div class="custom-recaptcha-badge" role="group" aria-label="Site protection">
     <div class="custom-recaptcha-badge__icon">
         <Image src={ReCaptcha} alt="reCAPTCHA" title="reCAPTCHA" width={64} height={64} fetchpriority="high" />
     </div>
@@ -27,7 +27,7 @@ import { ExternalLink } from '@components';
     </div>
 </div>
 
-<script defer>
+<script>
 document.addEventListener("DOMContentLoaded", (event) => {
     const starContainer = document.getElementById("star-container");
 

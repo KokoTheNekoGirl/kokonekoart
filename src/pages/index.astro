@@ -16,7 +16,7 @@ const [kokoAnimated, kokoStill] = await Promise.all([getImage({ src: Koko }), ge
 <Layout title={HOME_TITLE} description={HOME_DESCRIPTION} jsonLd={{ '@context': 'https://schema.org', '@graph': [websiteNode(Astro.site), personNode(Astro.site), brandNode(Astro.site)] }}>
 	<section class="info-viewport hero-section">
 		<div class="hero-content">
-			<h1 class="animate__animated animate__fadeInUp" itemprop="name">Hello! I'm Jess or Koko.</h1>
+			<h1 class="animate__animated animate__fadeInUp">Hello! I'm Jess or Koko.</h1>
 			<div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
 				<p>I do lots of things, but <strong>mainly furry digital art</strong> and <strong>web design &amp; development</strong>. Check out my work and consider commissioning me or hiring me as a freelancer!</p>
 			</div>

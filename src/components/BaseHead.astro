@@ -110,6 +110,11 @@ const imageURL = new URL(ogImage.src, site);
 <Font cssVariable="--font-fuzzy-bubbles" preload={[{ weight: 400, style: 'normal' }]} />
 <Font cssVariable="--font-starborn" />
 
+<!-- NoScript Styles -->
+<noscript>
+    <style>.animate__animated { animation: none !important; }</style>
+</noscript>
+
 <!-- Umami: cookieless, anonymous analytics. Production on kokoneko.art only; honours Do Not Track. -->
 {import.meta.env.PROD && (
   <script

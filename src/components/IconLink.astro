@@ -21,8 +21,8 @@ const wrapperProps = isPaw ? { class: 'paw-icon' } : {};
 ---
 
 <Wrapper {...wrapperProps}>
-    <a href={href} role="button" class:list={['icon', className && `icon-${className}`]} {...props} rel={relValue} aria-describedby={isExternal ? 'external-hint' : undefined} target={isExternal ? '_blank' : undefined} itemprop="url">
-        <span itemprop="name" aria-hidden="true"><slot /></span>
+    <a href={href} role="button" class:list={['icon', className && `icon-${className}`]} {...props} rel={relValue} aria-describedby={isExternal ? 'external-hint' : undefined} target={isExternal ? '_blank' : undefined}>
+        <span aria-hidden="true"><slot /></span>
         {isPaw && (
             <>
                 <span class="toe-beans toe-bean-1"></span>

@@ -62,11 +62,11 @@ const today = new Date();
 
     <Stars />
 
-    <section class="topbar">
+    <div class="topbar">
         <span>I stand with human artists and developers. <ExternalLink href="https://www.teamhuman.org/">Support #TeamHuman</ExternalLink>.</span>
-    </section>
+    </div>
     <header id="header">
-        <a class="site-branding" href="/" title={SITE_TITLE} rel="home" itemprop="url">
+        <a class="site-branding" href="/" title={SITE_TITLE} rel="home">
             <Image class="site-logo" src={Logo} alt={`${SITE_TITLE}'s Logo`} width={400} height={400} loading="eager" fetchpriority="high" />
             <Image class="site-name" src={KokoNekoArt} alt={SITE_TITLE} width={1011} height={140} loading="eager" fetchpriority="high" />
         </a>
@@ -86,11 +86,11 @@ const today = new Date();
         </nav>
     </header>
 
-    <main id="main-content"><article class="container" itemprop="mainContentOfPage">
+    <main id="main-content"><div class="container">
         <slot />
-    </article></main>
+    </div></main>
 
-    <footer id="footer" role="contentinfo">
+    <footer id="footer">
         <div id="copyright">
             {SITE_TITLE} &copy; {today.getFullYear()} | All rights reserved. | <i class="fa-solid fa-shield-halved"></i> <a href="/privacy">Privacy</a> |
             <div class="motion-control">
@@ -101,10 +101,6 @@ const today = new Date();
             </div>
         </div>
     </footer>
-
-    <noscript>
-        <style>.animate__animated { animation: none !important; }</style>
-    </noscript>
 
     <script>
         import '@utils/track-links';
