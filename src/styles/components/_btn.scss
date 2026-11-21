@@ -434,7 +434,7 @@
     transform-origin: left top;
     border-radius: 5px;
     content: " ";
-    transition: opacity ease 0.5;
+    transition: opacity ease 0.5s;
 }
 
 .checkbox-wrapper .check-box::before {
